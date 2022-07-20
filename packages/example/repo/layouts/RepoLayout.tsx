@@ -1,6 +1,5 @@
 import React, { useState } from 'React'
 import { graphql, useFragment } from 'react-relay'
-import { usePageContext } from 'vilay'
 import Labels from '../../components/Labels'
 
 import type { RepoLayout_header$key } from './__generated__/RepoLayout_header.graphql'
@@ -48,6 +47,7 @@ const RepoLayout: React.FC<Props> = ({
   const data = useFragment(
     graphql`
       fragment RepoLayout_header on Repository {
+        url
         description
         homepageUrl
         nameWithOwner
@@ -58,11 +58,9 @@ const RepoLayout: React.FC<Props> = ({
         }
         languages(first: 10) {
           nodes {
-      
-              id
-              name
-              color
-            
+            id
+            name
+            color
           }
         }
         openIssues: issues(filterBy: { states: [OPEN] }) {
@@ -83,25 +81,30 @@ const RepoLayout: React.FC<Props> = ({
     'en-GB'
   )
 
-  const context = { url: ''}
+  const context = { url: '' }
   // const [activeTab] = useState('overview')
 
   return (
     <div className="flex-col flex-grow">
-      <h2 className="text-2xl pt-6">
+      <h2 className="text-3xl pt-8 pb-4">
         <a href={`/repo/${nameWithOwner}`}> {nameWithOwner} </a>
       </h2>
-      <p>{data?.description}</p>
-      <p className="text-sm">
-        <a href={data?.homepageUrl}>Homepage</a>
+      <p className="text-sm pb-4">{data?.description}</p>
+      <p className="text-sm pb-4">
+        <a href={data?.homepageUrl}>Homepage</a> |{' '}
+        <a href={data?.url}>Github</a>
       </p>
-      <p className="text-sm">
-        <strong>last release:</strong>{' '}
-        <a href={data?.latestRelease?.url}>{data?.latestRelease?.tagName}</a> at{' '}
-        {publishedAt}
-      </p>
+
+      {data?.latestRelease ? (
+        <p className="text-sm pb-4">
+          <label>last release:</label>{' '}
+          <a href={data?.latestRelease?.url}>{data?.latestRelease?.tagName}</a>{' '}
+          at {publishedAt}
+        </p>
+      ) : undefined}
+
       <p className="text-xs">
-       {data?.languages ?  <Labels labels={data?.languages?.nodes} /> : <></>}
+        {data?.languages ? <Labels labels={data?.languages?.nodes} /> : <></>}
       </p>
       <ul className="flex-inline pt-4">
         <NavLink

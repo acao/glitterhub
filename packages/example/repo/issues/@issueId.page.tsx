@@ -1,8 +1,12 @@
 import React from 'react'
-import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
+import {
+  graphql,
+  useLazyLoadQuery,
+  usePreloadedQuery,
+  type PreloadedQuery,
+} from 'react-relay'
 import { defineVilay } from 'vilay'
 import defaultDefines from '../../renderer/_default.page'
-import IssueListComponent from '../../components/issues/IssueList'
 import type {
   IssueIdByRepoQuery,
   IssueIdByRepoQuery$variables,
@@ -66,6 +70,7 @@ export default defineVilay<{
       query,
       queryRef
     )
+
     const nameWithOwner = `${queryRef.variables.owner}/${queryRef.variables.name}`
     return (
       <RepoLayout repository={repository} nameWithOwner={nameWithOwner}>
@@ -83,14 +88,19 @@ export default defineVilay<{
                   <article
                     className="flex-column w-3/4 text-sm no-wrap overflow-y-noscroll whitespace-pre-wrap"
                     dangerouslySetInnerHTML={{
-                      __html: repository.issue.bodyHTML.replace('highlight-source', 'language'),
+                      __html: repository.issue.bodyHTML.replace(
+                        'highlight-source',
+                        'language'
+                      ),
                     }}
                   />
                   <aside className="flex flex-column w-1/4">
                     <div>
                       <h3 className="text-l">Meta</h3>
                       <p className="text-sm">{repository.issue.updatedAt}</p>
-                      <p className="text-sm">@{repository.issue.author.login}</p>
+                      <p className="text-sm">
+                        @{repository.issue.author.login}
+                      </p>
                       <h3 className="text-l">Labels</h3>
                       <p className="text-xs">
                         {repository.issue?.labels ? (

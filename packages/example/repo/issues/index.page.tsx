@@ -53,9 +53,7 @@ export default defineVilay<{
   Page: ({ queryRef }) => {
     const issueData = usePreloadedQuery<issuesByRepoQuery>(query, queryRef)
     const nameWithOwner = `${queryRef.variables.owner}/${queryRef.variables.name}`
-    const context = usePageContext()
-  console.log(context)
-
+    
     return (
       <RepoLayout
         repository={issueData.repository}

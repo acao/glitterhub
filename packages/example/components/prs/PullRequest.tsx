@@ -6,6 +6,7 @@ import type { PullRequest_data$key } from './__generated__/PullRequest_data.grap
 
 interface Props {
   pull: PullRequest_data$key
+  nameWithOwner: string
 }
 
 // Simple component that renders the issue using GraphQL fragment.
@@ -35,13 +36,13 @@ const PullRequestComponent: React.FC<Props> = ({ pull, nameWithOwner }) => {
   return (
     <ItemCard.ItemCard>
       <ItemCard.Header>
-      <a href={`/repo/${nameWithOwner}/pulls/${data.number}`}>{data.title}</a>
+      <a href={`/repo/${nameWithOwner}/pull/${data.number}`}>{data.title}</a>
       </ItemCard.Header>
       <ItemCard.Body>
         by @{data.author?.login} on {new Date(data.createdAt).toLocaleString()}
       </ItemCard.Body>
       <ItemCard.Footer>
-        <Labels labels={data.labels?.nodes} />
+        <Labels labels={data?.labels?.nodes} />
       </ItemCard.Footer>
     </ItemCard.ItemCard>
   )

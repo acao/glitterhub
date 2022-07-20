@@ -61,7 +61,7 @@ export async function render(pageContext: PageContextBuiltIn & PageContext) {
   return {
     documentHtml,
     pageContext: streamEnd
-      .then(() => ({ relayInitialData: getStoreSource().toJSON() }))
+      .then(() => ({  relayInitialData: getStoreSource().toJSON() }))
       .catch(() => ({})),
   }
 }

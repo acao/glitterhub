@@ -1,1 +1,1 @@
-export default '/repo/@owner/@name/pulls/@pullId'
+export default '/repo/@owner/@name/pull/@pullId'
