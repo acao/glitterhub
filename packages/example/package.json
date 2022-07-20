@@ -11,25 +11,34 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.8",
-    "@vilay/render": "*",
+    "@types/marked": "^4.0.3",
+    "@types/node": "^16.11.41",
+    "@types/prismjs": "^1.26.0",
+    "@unocss/reset": "^0.30.8",
+    "@vilay/render": "workspace:../render",
+    "@wooorm/starry-night": "^1.2.0",
     "babel-plugin-relay": "^14.0.0",
     "debug": "^4.3.4",
+    "github-markdown-css": "^5.1.0",
+    "hast-util-to-html": "^8.0.3",
+    "marked": "^4.0.18",
     "react": "^18.2.0",
+    "react-async-hook": "^4.0.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
     "react-relay": "^14.0.0",
     "relay-runtime": "^14.0.0",
-    "vite-plugin-ssr": "^0.4.11",
-    "vilay": "*"
+    "ua-parser-js": "^1.0.2",
+    "unocss": "^0.30.8",
+    "vilay": "workspace:../vilay"
   },
   "devDependencies": {
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/react-relay": "^13.0.2",
     "@types/relay-runtime": "^13.0.3",
-    "@unocss/reset": "^0.30.8",
     "relay-compiler": "^14.0.0",
-    "unocss": "^0.30.8",
-    "vite": "^2.9.12"
+    "vite": "^2.9.12",
+    "vite-tsconfig-paths": "^3.5.0"
   }
 }

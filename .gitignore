@@ -3,6 +3,9 @@ dist/
 __generated__/
 
 *.local
+error
+
+packages/example/.env
 
 .yarn/*
 !.yarn/patches
@@ -10,3 +13,4 @@ __generated__/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+*yarn-error.log
