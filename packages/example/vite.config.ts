@@ -5,6 +5,9 @@ import unocss from 'unocss/vite'
 
 const config: UserConfig = {
   plugins: [vilay(), unocss({ presets: [presetUno()] })],
+  // esbuild: {
+  //   exclude: ["vite-plugin-ssr"] 
+  // }
 }
 
 export default config

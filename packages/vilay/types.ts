@@ -21,7 +21,9 @@ export type PageContext<T = Record<string, unknown>, V = Variables> = {
   routeParams: T
   fetch: typeof fetch
   relayInitialData: RecordMap
+  url: string
 } & PageContextUrls
+  
 
 export type Page<Props = Record<string, unknown>> = React.FC<Props>
 

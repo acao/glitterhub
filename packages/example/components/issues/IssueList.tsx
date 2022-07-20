@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useReducer, Reducer, useEffect, useState } from 'react'
 import { graphql, usePaginationFragment } from 'react-relay'
 import Button from '../Button'
 import IssueComponent from './Issue'
@@ -7,6 +7,10 @@ import type { IssueList_repository$key } from './__generated__/IssueList_reposit
 interface Props {
   repository: IssueList_repository$key
 }
+const tabClass = (open: boolean) =>
+  `inline-flex pr-2 pl-2 border hover:border hover:border-black dark:hover:border-#eee cursor-pointer ${
+    open ? 'dark:border-#eee' : 'dark:border-black'
+  }`
 
 // Component that renders the list of issues for the repository using Relay's `usePaginationFragment()`.
 const IssueListComponent: React.FC<Props> = ({ repository }) => {
@@ -14,6 +18,13 @@ const IssueListComponent: React.FC<Props> = ({ repository }) => {
     graphql`
       fragment IssueList_repository on Repository
       @refetchable(queryName: "IssueListPaginationQuery") {
+        openIssues: issues(filterBy: { states: [OPEN] }) {
+          count: totalCount
+        }
+        closedIssues: issues(filterBy: { states: [CLOSED] }) {
+          count: totalCount
+        }
+        nameWithOwner
         issues(
           after: $cursor
           first: $first
@@ -34,29 +45,43 @@ const IssueListComponent: React.FC<Props> = ({ repository }) => {
     repository
   )
 
-  const [onlyOpened, setOnlyOpened] = React.useState<boolean | null>(null)
 
-  React.useEffect(() => {
-    if (onlyOpened != null)
-      // `startTransition()` keeps the previous content temporarily while the new content is loading.
+  const [issueStates, setStateFilter] = useState<('OPEN' | 'CLOSED')[]>(['OPEN'])
+
+  useEffect(() => {
+    if(issueStates) {
       React.startTransition(() => {
-        refetch({ filter: { states: onlyOpened ? 'OPEN' : null } })
+        refetch({ filter: { states: issueStates }})
       })
-  }, [onlyOpened])
+    }
+  }, [issueStates])
+
 
   return (
     <div className="py-4">
-      <Button onClick={() => setOnlyOpened(!onlyOpened)}>
-        Toggle opened filter: {onlyOpened ? 'ON' : 'OFF'}
-      </Button>
-      <ul className="list-disc">
+      <div className="mb-1">
+        <span
+          className={tabClass(!!issueStates.includes('OPEN'))}
+          onClick={() => setStateFilter(['OPEN'])}
+        >
+          open: {data?.openIssues?.count}{' '}
+        </span>
+        <span
+          className={tabClass(!!issueStates.includes('CLOSED'))}
+          onClick={() => setStateFilter(['CLOSED'])}
+        >
+          {' '}
+          closed: {data?.closedIssues?.count}
+        </span>
+      </div>
+      <ul className="list-none">
         {(data.issues.edges ?? [])
           .map(
             (edge, i) =>
               edge?.node && (
-                <li key={i} className="ml-4 my-2">
+                <li key={edge.node.url} className="">
                   <Suspense fallback={'Issue loading...'}>
-                    <IssueComponent issue={edge.node} />
+                    <IssueComponent issue={edge.node} nameWithOwner={data.nameWithOwner} />
                   </Suspense>
                 </li>
               )

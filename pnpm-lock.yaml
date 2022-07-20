@@ -12,8 +12,12 @@ importers:
       prettier: ^2.6.1
       prettier-plugin-astro: ^0.1.0-next.4
       typescript: ^4.6.3
+      vite: ^2.9.6
+      vite-plugin-ssr: ^0.4.0-beta.20
     dependencies:
       '@changesets/cli': 2.23.2
+      vite: 2.9.12
+      vite-plugin-ssr: 0.4.11_vite@2.9.12
     devDependencies:
       '@typescript-eslint/eslint-plugin': 5.30.6_ca2dkzy3u2ze64lng5f53xzl5u
       '@typescript-eslint/parser': 5.30.6_zi6vhgfvjwwpz4aow2huzz5d74
@@ -91,6 +95,7 @@ importers:
       '@unocss/reset': ^0.30.8
       '@vilay/render': '*'
       babel-plugin-relay: ^14.0.0
+      debug: ^4.3.4
       react: ^18.2.0
       react-dom: ^18.2.0
       react-error-boundary: ^3.1.4
@@ -105,6 +110,7 @@ importers:
       '@babel/runtime': 7.18.3
       '@vilay/render': link:../render
       babel-plugin-relay: 14.0.0
+      debug: 4.3.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-error-boundary: 3.1.4_react@18.2.0
@@ -119,7 +125,7 @@ importers:
       '@types/relay-runtime': 13.0.3
       '@unocss/reset': 0.30.13
       relay-compiler: 14.0.0
-      unocss: 0.30.13
+      unocss: 0.30.13_debug@4.3.4
       vite: 2.9.12
 
   packages/render:
@@ -1552,11 +1558,11 @@ packages:
       '@unocss/preset-wind': 0.30.13
     dev: true
 
-  /@unocss/preset-web-fonts/0.30.13:
+  /@unocss/preset-web-fonts/0.30.13_debug@4.3.4:
     resolution: {integrity: sha512-vRzDm/7tVTDXdd5K/oG7gak3Ku51UZGcbyfwZf4yMafR7YI9JFhmm4fns9KBNrNaukIHohkZzLI63OR+SPGNbg==}
     dependencies:
       '@unocss/core': 0.30.13
-      axios: 0.26.1
+      axios: 0.26.1_debug@4.3.4
     transitivePeerDependencies:
       - debug
     dev: true
@@ -1857,10 +1863,10 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /axios/0.26.1:
+  /axios/0.26.1_debug@4.3.4:
     resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
     dependencies:
-      follow-redirects: 1.15.1
+      follow-redirects: 1.15.1_debug@4.3.4
     transitivePeerDependencies:
       - debug
     dev: true
@@ -3059,7 +3065,7 @@ packages:
     resolution: {integrity: sha512-0sQoMh9s0BYsm+12Huy/rkKxVu4R1+r96YX5cG44rHV0pQ6iC3Q+mkoMFaGWObMFYQxCVT+ssG1ksneA2MI9KQ==}
     dev: true
 
-  /follow-redirects/1.15.1:
+  /follow-redirects/1.15.1_debug@4.3.4:
     resolution: {integrity: sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -3067,6 +3073,8 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dependencies:
+      debug: 4.3.4
     dev: true
 
   /for-each/0.3.3:
@@ -6143,7 +6151,7 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: false
 
-  /unocss/0.30.13:
+  /unocss/0.30.13_debug@4.3.4:
     resolution: {integrity: sha512-35UWjJ/LtsWTojXRIcZgrAq0Qsl+hKJnEJA9sgQB53Xy4j5ppR0ymHZVKo+Yp7Z1h1y+3b0HIGgBOqRoF8OnFQ==}
     engines: {node: '>=14'}
     dependencies:
@@ -6154,7 +6162,7 @@ packages:
       '@unocss/preset-mini': 0.30.13
       '@unocss/preset-typography': 0.30.13
       '@unocss/preset-uno': 0.30.13
-      '@unocss/preset-web-fonts': 0.30.13
+      '@unocss/preset-web-fonts': 0.30.13_debug@4.3.4
       '@unocss/preset-wind': 0.30.13
       '@unocss/reset': 0.30.13
       '@unocss/transformer-directives': 0.30.13

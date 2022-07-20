@@ -4,6 +4,8 @@ import { usePageContext } from 'vilay'
 import type { PageLayoutProps } from 'vilay'
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
+import RecentlyStarred from '../components/sidebar/RecentlyStarred'
+import MyRepos from '../components/sidebar/MyRepos'
 
 export const PageLayout: React.FC<PageLayoutProps> = ({
   children,
@@ -12,38 +14,49 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
 }) => {
   const links = {
     '/': 'Home',
-    '/repo/xiniha/vilay/issues': 'Issues',
-    '/repo/xiniha/vilay/issues/create': 'Create Issue',
+    '/viewer': 'My Profile',
   }
 
   const context = usePageContext()
 
   return (
-    <>
-      <LoadingIndicator transitioning={routeTransitioning} />
-      <div className="flex max-w-900px m-auto">
-        <div className="p-5 flex-shrink-0 flex flex-col items-end leading-7">
-          <h1 className="my-4 text-2xl">Vite SSR Relay</h1>
-          {Object.entries(links).map(([href, text]) => (
-            <a
-              href={href}
-              key={href}
-              className={`text-base hover:text-1.05rem transition-all duration-300 border-b-1px ${
-                // show a basic active state based on currentPath state
-                context?.urlParsed?.pathname === href ? 'border-b-dark' : 'border-b-transparent'
-              } `}
-            >
-              {text}
-            </a>
-          ))}
-        </div>
-        <div className="p-5 pb-12 border-l-2 border-#eee min-h-screen">
-          <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <React.Suspense fallback={'Loading...'}>{children}</React.Suspense>
-          </ErrorBoundary>
+      <div className="dark:bg-black dark:text-slate-100">
+        <link
+          href="https://unpkg.com/prismjs@v1.x/themes/prism.css"
+          rel="stylesheet"
+        />
+
+        <script
+          src="https://unpkg.com/prismjs@v1.x/components/prism-core.min.js"
+          data-filter-selector=".highlight"
+        ></script>
+        <script src="https://unpkg.com/prismjs@v1.x/plugins/autoloader/prism-autoloader.min.js"></script>
+
+        <LoadingIndicator transitioning={routeTransitioning} />
+        <div className="flex max-w-1200px m-auto">
+          <div className="p-7 flex-shrink-0 flex flex-col items-end leading-3">
+            <h1 className="my-6 text-2xl">Github Vilay Demo</h1>
+            {Object.entries(links).map(([href, text]) => (
+              <a
+                href={href}
+                key={href}
+                className="text-base hover:text-1.05rem transition-all duration-300"
+              >
+                {text}
+              </a>
+            ))}
+            <RecentlyStarred />
+            <MyRepos />
+          </div>
+          <div className="p-5 pb-14 border-l-2 border-#eee min-h-screen w-full">
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <React.Suspense fallback={'Loading...'}>
+                {children}
+              </React.Suspense>
+            </ErrorBoundary>
+          </div>
         </div>
       </div>
-    </>
   )
 }
 
