@@ -24,7 +24,8 @@ export const initRelayEnvironment: InitRelayEnvironment = ({
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: `Bearer ${
-          import.meta.env.VITE_GITHUB_TOKEN
+          // @ts-expect-error fix this later
+          VITE_GITHUB_TOKEN ?? import.meta.env.VITE_GITHUB_TOKEN
         }`,
       },
       body: JSON.stringify({ query, variables }),

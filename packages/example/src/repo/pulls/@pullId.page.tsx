@@ -18,7 +18,7 @@ interface Props {
 interface RouteParams {
   owner: string
   name: string
-  pullId: number
+  pullId: string
 }
 
 // Variables used in this query is constructed using the `getQueryVariables()` on preload.
@@ -63,8 +63,8 @@ export const query = graphql`
 `
 
 export default defineVilay<{
-  PageProps: Props
-  RouteParams: RouteParams
+  PageProps: Props,
+  RouteParams: RouteParams,
   QueryVariables: PullIdByRepoQuery$variables
 }>({
   // This overrides the application-wide <head> tag definition in `_default.page.tsx`
@@ -122,14 +122,14 @@ export default defineVilay<{
                       <p>
                         author: <LoginLink login={pr.author.login} />
                       </p>
-                      <h3 className="text-l">Labels</h3>
-                      <p className="text-xs">
-                        {pr?.labels?.nodes.length > 0 ? (
-                          <Labels labels={pr?.labels?.nodes} />
-                        ) : (
-                          <></>
+                     
+                        {pr?.labels?.nodes?.length > 0 && ( 
+                          <p className="text-xs">
+                            <h3 className="text-l">Labels</h3>
+                            <Labels labels={pr?.labels?.nodes} />
+                          </p>
                         )}
-                      </p>
+                    
                     </div>
                   </aside>
                 </div>
