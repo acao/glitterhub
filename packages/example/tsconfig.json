@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "strict": true,
+    "baseUrl": "./src/",
     "module": "ESNext",
     "moduleResolution": "Node",
     "target": "ES2017",
@@ -8,6 +8,10 @@
     "types": ["vite/client", "react-dom/next", "react/next"],
     "jsx": "react-jsx",
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "~/components/*": ["./components/*"],
+      "~/lib/*": ["./lib/*"]
+    }
   }
 }

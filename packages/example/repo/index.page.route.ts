@@ -1,1 +1,0 @@
-export default '/repo/@owner/@name/'

@@ -1,0 +1,22 @@
+{
+    "name": "glitterhub-worker-github-oauth",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Glitterhub Github Oauth",
+    "main": "dist/worker.js",
+    "author": "Gregor Martynus (https://twitter.com/gr2m)",
+    "license": "ISC",
+    "repository": "github:gr2m/cloudflare-worker-github-oauth-login",
+    "scripts": {
+        "build": "tsc"
+    },
+    "release": {
+        "branches": [
+            "main"
+        ]
+    },
+    "dependencies": {
+        "@cloudflare/workers-types": "^3.8.0",
+        "@types/jest": "^28.1.6"
+    }
+}
