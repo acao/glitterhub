@@ -8,7 +8,7 @@ import type {
 } from './__generated__/readmePageRepoQuery.graphql'
 import RepoLayout from './layouts/RepoLayout'
 
-import { parseMarkdown } from '~/lib/marked'
+import { useMarkdown } from '~/lib/marked'
 
 
 interface Props {
@@ -57,17 +57,18 @@ export default defineVilay<{
     const nameWithOwner = `${queryRef.variables.owner}/${queryRef.variables.name}`
     const readme =
       issueData?.repository?.main?.text ?? issueData?.repository?.master?.text
+    const rendered = useMarkdown(readme)
     return (
       <RepoLayout
         repository={issueData.repository}
         nameWithOwner={nameWithOwner}
       >
         <div className="flex flex-col flex-grow">
-          {readme && (
+          {rendered?.result && (
             <>
               <React.Suspense fallback="Loading...">
                 <article className="prose lg:prose-l font-serif markdown-body dark:bg-dark w-full"
-                  dangerouslySetInnerHTML={{ __html: parseMarkdown(readme) }}
+                  dangerouslySetInnerHTML={{ __html: rendered?.result  }}
                 />
               </React.Suspense>
             </>

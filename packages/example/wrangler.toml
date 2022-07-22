@@ -1,7 +1,6 @@
-name = "vilay-example"
+name = "glitterhub"
 main = "./dist/client/_worker.js"
 compatibility_date = "2022-05-04"
-account_id = ""
 workers_dev = true
 compatibility_flags = ["streams_enable_constructors"]
 
@@ -9,4 +8,7 @@ compatibility_flags = ["streams_enable_constructors"]
 command = "pnpm build cloudflare-workers"
 
 [site]
-bucket = "./dist/client"
+    bucket = "./dist/client"
+
+[vars]
+VITE_GITHUB_TOKEN="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"

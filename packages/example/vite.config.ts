@@ -1,6 +1,6 @@
 import type { UserConfig } from 'vite'
 import vilay from 'vilay/plugin'
-import { presetUno, presetAttributify, presetTypography } from 'unocss'
+import { presetUno, presetTypography } from 'unocss'
 import unocss from 'unocss/vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 

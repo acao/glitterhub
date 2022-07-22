@@ -3,18 +3,25 @@ import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
 import { defineVilay } from 'vilay'
 import { RepoItem } from '~/components/repos/RepoItem'
 import Avatar from '~/components/owner/Avatar'
-import LoginLink from '~/components/owner/LoginLink'
-import { viewerPageQuery } from './__generated__/viewerPageQuery.graphql'
-import { parseMarkdown } from '~/lib/marked'
+import {
+  OwnerIdPageQuery,
+  OwnerIdPageQuery$variables,
+} from './__generated__/OwnerIdPageQuery.graphql'
+import { useMarkdown } from '~/lib/marked'
 import PaginatedOwnerRepoList from '~/components/repos/PaginatedOwnerRepoList'
 
 interface Props {
-  queryRef: PreloadedQuery<viewerPageQuery>
+  queryRef: PreloadedQuery<OwnerIdPageQuery>
 }
 
 // If a page has `query` exported, it will be prefetched and SSR'd.
 export const query = graphql`
-  query OwnerIdPageQuery($ownerId: String!, $cursor: String, $first: Int) {
+  query OwnerIdPageQuery(
+    $ownerId: String!
+    $cursor: String
+    $first: Int
+    $orderBy: RepositoryOrder
+  ) {
     user(login: $ownerId) {
       ...Avatar
       avatarUrl
@@ -23,7 +30,7 @@ export const query = graphql`
       companyHTML
       isViewer
       isFollowingViewer
-      viewerIsFollowing  
+      viewerIsFollowing
       bioMarkdown: repository(name: $ownerId) {
         object(expression: "main:README.md") {
           ... on Blob {
@@ -44,7 +51,7 @@ export const query = graphql`
           ...RepoItem_meta
         }
       }
-    ...PaginatedOwnerRepoList_owner
+      ...PaginatedOwnerRepoList_owner
     }
 
     organization(login: $ownerId) {
@@ -70,24 +77,33 @@ export const query = graphql`
   }
 `
 
-export default defineVilay<{ PageProps: Props }>({
+export default defineVilay<{
+  PageProps: Props
+  QueryVariables: OwnerIdPageQuery$variables
+  RouteParams: { ownerId: string }
+}>({
   // Basic data fetching example using Relay.
   getQueryVariables: (routeParams) => ({
     ...routeParams,
-    first: 10,
+    first: 25,
+    orderBy: { direction: 'DESC', field: 'UPDATED_AT' },
   }),
   Page: ({ queryRef }) => {
     const data = usePreloadedQuery(query, queryRef)
-
+    const isOrg = !!data?.organization
     const owner = data.user ?? data.organization
+
+    const rendered = useMarkdown(owner?.bioMarkdown?.object?.text)
+
+    console.log(rendered)
     return (
       <div className="flex flex-col flex-grow pl-2">
         {owner && (
           <Suspense>
-            <Avatar user={owner} isOrg={data.organization} width="w-16" />
-            <div className="flex flex-row">
-              <div className="flex flex-col">
-                <h2 className="my-6 text-xl">Popular</h2>
+            <Avatar user={owner} isOrg={isOrg} width="w-16" />
+            <div className="flex flex-row mt-6">
+              <div className="flex flex-col min-w-200px">
+                <h2 className=" text-xl">Popular</h2>
                 <ul>
                   {owner.repositories.nodes?.map(
                     (node, i) =>
@@ -116,16 +132,26 @@ export default defineVilay<{ PageProps: Props }>({
                   )}
                 </ul>
               </div>
-              <div className="flex flex-col ml-2 p-2 prose lg:prose-l markdown-body dark:bg-dark">
-                <div dangerouslySetInnerHTML={{ __html: owner?.bioHTML }} />{' '}
-                {owner?.bioMarkdown?.object?.text && (
+              <div className="flex flex-col w-full ml-6 pl-4">
+                <div>
                   <div
-                    dangerouslySetInnerHTML={{
-                      __html: parseMarkdown(owner?.bioMarkdown?.object?.text),
-                    }}
-                  ></div>
-                )}
-                <PaginatedOwnerRepoList owner={owner} isOrg={data.organization} />
+                    className="prose lg:prose-l markdown-body dark:bg-dark mb-6"
+                    dangerouslySetInnerHTML={{ __html: owner?.bioHTML }}
+                  />{' '}
+                  {rendered?.result && (
+                    <div className='prose lg:prose-l markdown-body dark:bg-dark'
+                      dangerouslySetInnerHTML={{
+                        __html: rendered.result,
+                      }}
+                    ></div>
+                  )}
+                </div>
+                <h2 className="my-6 text-2xl">All Repositories</h2>
+                <PaginatedOwnerRepoList
+                  owner={owner}
+                  isOrg={isOrg}
+                  pageLength={queryRef.variables.first}
+                />
               </div>
             </div>
           </Suspense>

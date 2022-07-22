@@ -16,8 +16,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   routeTransitioning,
 }) => {
   const links = {
-    '/': 'Home',
-    '/viewer': 'My Profile',
+    '/acao': 'My Profile',
   }
 
   return (

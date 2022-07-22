@@ -2,17 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+body.dark {
+    --color-fg-default: #c9d1d9;
+}
+
+
 .prose a, .prose img {
     display: inline-block
 }
 
 .prose {
     max-width: fit-content;
-    width: 100%;
+    width: 80ch;
+    /* width: 100%; */
 }
+
 
 .markdown-body {
     padding: 6px
+}
+
+.dark .markdown-body {
+
+}
+.dark, .dark p {
+    color: #c9d1d9
+}
+
+button, input, optgroup, select, textarea {
+    padding: 2px;
+}
+.dark button, .dark input, .dark optgroup, .dark select, textarea {
+    background-color: transparent;
 }
 
 .markdown-body .highlight pre, .markdown-body code {
@@ -21,6 +42,10 @@
 
 a:hover, a:focus {
     border-bottom: 1px  dashed white;
+}
+/* reset for the github css */
+.markdown-body a:hover, .markdown-body a:focus {
+    border-bottom: inherit
 }
 
 code, article code {

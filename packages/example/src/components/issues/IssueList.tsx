@@ -9,7 +9,7 @@ interface Props {
 }
 const tabClass = (open: boolean) =>
   `inline-flex pr-2 pl-2 border hover:border hover:border-black dark:hover:border-#eee cursor-pointer ${
-    open ? 'dark:border-#eee' : 'dark:border-black'
+    open ? 'dark:border-#eee' : 'border-transparent'
   }`
 
 // Component that renders the list of issues for the repository using Relay's `usePaginationFragment()`.

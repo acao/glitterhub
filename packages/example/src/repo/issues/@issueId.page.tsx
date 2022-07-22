@@ -37,7 +37,6 @@ export const query = graphql`
         updatedAt
         author {
           login
-          
         }
         labels(first: 10) {
           nodes {
@@ -59,10 +58,10 @@ export default defineVilay<{
   // If a page has `getQueryVariables` exported, it'll be called to get the variables used for preloading the query.
   // If it's not exported, route params will be directly used as variables.
   getQueryVariables: (routeParams) => {
-    return { 
+    return {
       ...routeParams,
-      issueId: parseInt(routeParams?.issueId, 10)
-   }
+      issueId: parseInt(routeParams?.issueId, 10),
+    }
   },
   // Relay pagination example.
   Page: ({ queryRef }) => {
@@ -86,23 +85,24 @@ export default defineVilay<{
                 />
                 <div className="flex flex-grow flex-row w-full">
                   <div className="flex-column w-3/4 flex-grow">
-
-                
-                  <article
-                    className="w-full prose lg:prose-l markdown-body dark:bg-dark"
-                    dangerouslySetInnerHTML={{
-                     // __html: repository.issue.bodyHTML,
-                      __html: repository.issue.bodyHTML,
-                    }}
-                  />
-                    </div>
-                  <aside className="flex flex-column w-1/4">
+                    <article
+                      className="w-full prose lg:prose-l markdown-body dark:bg-dark"
+                      dangerouslySetInnerHTML={{
+                        // __html: repository.issue.bodyHTML,
+                        __html: repository.issue.bodyHTML,
+                      }}
+                    />
+                  </div>
+                  <aside className="flex flex-column w-1/4 min-w-200px">
                     <div className="ml-4 w-full">
                       <ItemCard.ItemCard>
                         <ItemCard.Header>Meta</ItemCard.Header>
                         <ItemCard.Body>
                           <p>{repository.issue.updatedAt}</p>
-                          <p>author: <LoginLink login={repository.issue.author.login} /></p>
+                          <p>
+                            author:{' '}
+                            <LoginLink login={repository.issue.author.login} />
+                          </p>
                         </ItemCard.Body>
                       </ItemCard.ItemCard>
 

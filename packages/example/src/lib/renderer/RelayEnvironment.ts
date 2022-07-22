@@ -10,7 +10,7 @@ import type { InitRelayEnvironment } from 'vilay'
 // Init relay environment
 export const initRelayEnvironment: InitRelayEnvironment = ({
   isServer,
-  pageContext: { fetch, relayInitialData }
+  pageContext: { fetch, relayInitialData },
 }): Environment => {
   const network = Network.create(async ({ text: query }, variables) => {
     // Using GitHub API for example
@@ -18,10 +18,14 @@ export const initRelayEnvironment: InitRelayEnvironment = ({
       method: 'POST',
       headers: {
         // CF Workers don't append any User Agent, and GitHub API requires it
-        ...(typeof window === 'undefined' ? { 'User-Agent': 'Vilay' } : undefined),
+        ...(typeof window === 'undefined'
+          ? { 'User-Agent': 'Vilay' }
+          : undefined),
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+        Authorization: `Bearer ${
+          import.meta.env.VITE_GITHUB_TOKEN
+        }`,
       },
       body: JSON.stringify({ query, variables }),
     })
@@ -33,12 +37,9 @@ export const initRelayEnvironment: InitRelayEnvironment = ({
     try {
       const data = (await response.json()) as GraphQLResponse
       return data
-    }
-    catch(err) {
+    } catch (err) {
       console.error(err)
     }
-
-    
   })
 
   const source = new RecordSource(relayInitialData)

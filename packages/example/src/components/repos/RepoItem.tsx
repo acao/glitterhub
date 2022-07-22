@@ -1,5 +1,4 @@
 import { useFragment, graphql } from 'react-relay'
-import Label from '../Label'
 
 import type { RepoItem_meta$key } from './__generated__/RepoItem_meta.graphql'
 
@@ -16,17 +15,27 @@ export const RepoItem : React.FC<Props> = ({ repo }) => {
         nameWithOwner
         isFork
         isPrivate
+        owner {
+          login
+        }
       }
     `,
     repo
   )
 
   return (
+    <span className="text-base hover:text-1.05rem transition-all duration-300 text-sm">
     <a
-      className="text-base hover:text-1.05rem transition-all duration-300 text-sm"
-      href={`/${data?.nameWithOwner}`}
+      href={`/${data?.owner?.login}`}
     >
-      {data?.nameWithOwner} 
+      {data?.owner?.login} 
     </a>
+    {""}/{""}
+    <a
+      href={`/${data?.owner?.login}/${data?.name}`}
+    >
+      {data?.name} 
+    </a>
+    </span>
   )
 }
