@@ -13,6 +13,15 @@ export const initRelayEnvironment: InitRelayEnvironment = ({
   pageContext: { fetch, relayInitialData },
 }): Environment => {
   const network = Network.create(async ({ text: query }, variables) => {
+    const token =
+      import.meta.env.VITE_GITHUB_TOKEN ?? import.meta.env.GH_TOKEN
+    if (!token) {
+      console.error('no GH_TOKEN found')
+      return null
+    }
+    if(token){
+      console.log("token!")
+    }
     // Using GitHub API for example
     const response = await fetch('https://api.github.com/graphql', {
       method: 'POST',
@@ -23,10 +32,7 @@ export const initRelayEnvironment: InitRelayEnvironment = ({
           : undefined),
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${
-          // @ts-expect-error fix this later
-          VITE_GITHUB_TOKEN ?? import.meta.env.VITE_GITHUB_TOKEN
-        }`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ query, variables }),
     })

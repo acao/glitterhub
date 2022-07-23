@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
 import { defineVilay } from 'vilay'
 import { RepoItem } from '~/components/repos/RepoItem'
@@ -7,7 +7,7 @@ import {
   OwnerIdPageQuery,
   OwnerIdPageQuery$variables,
 } from './__generated__/OwnerIdPageQuery.graphql'
-import { useMarkdown } from '~/lib/marked'
+import { parseMarkdown } from '~/lib/marked'
 import PaginatedOwnerRepoList from '~/components/repos/PaginatedOwnerRepoList'
 
 interface Props {
@@ -18,10 +18,29 @@ interface Props {
 export const query = graphql`
   query OwnerIdPageQuery(
     $ownerId: String!
-    $cursor: String
     $first: Int
+    $cursor: String
     $orderBy: RepositoryOrder
   ) {
+    repositoryOwner(login: $ownerId) {
+      ...PaginatedOwnerRepoList_owner
+      avatarUrl
+      url
+      login
+      repositories(first: 10, orderBy: { field: STARGAZERS, direction: DESC }){
+        nodes {
+          ...RepoItem_meta
+        }
+      }
+      newRepos: repositories(
+        first: 10
+        orderBy: { field: CREATED_AT, direction: DESC }
+      ) {
+        nodes {
+          ...RepoItem_meta
+        }
+      }
+    }
     user(login: $ownerId) {
       ...Avatar
       avatarUrl
@@ -31,49 +50,29 @@ export const query = graphql`
       isViewer
       isFollowingViewer
       viewerIsFollowing
-      bioMarkdown: repository(name: $ownerId) {
+      bioMarkdown: repository(name: $ownerId)  {
         object(expression: "main:README.md") {
           ... on Blob {
             text
           }
         }
       }
-      repositories(first: 10, orderBy: { field: STARGAZERS, direction: DESC }) {
-        nodes {
-          ...RepoItem_meta
-        }
-      }
-      newRepos: repositories(
-        first: 10
-        orderBy: { field: CREATED_AT, direction: DESC }
-      ) {
-        nodes {
-          ...RepoItem_meta
-        }
-      }
-      ...PaginatedOwnerRepoList_owner
     }
-
+    
     organization(login: $ownerId) {
       ...AvatarOrg
       avatarUrl
       name
-      ...PaginatedOwnerRepoListOrg_owner
-
-      repositories(first: 10, orderBy: { field: STARGAZERS, direction: DESC }) {
-        nodes {
-          ...RepoItem_meta
-        }
-      }
-      newRepos: repositories(
-        first: 10
-        orderBy: { field: CREATED_AT, direction: DESC }
-      ) {
-        nodes {
-          ...RepoItem_meta
+      bioMarkdown: repository(name: $ownerId)  {
+        object(expression: "main:README.md") {
+          ... on Blob {
+            text
+          }
         }
       }
     }
+   
+
   }
 `
 
@@ -87,15 +86,15 @@ export default defineVilay<{
     ...routeParams,
     first: 25,
     orderBy: { direction: 'DESC', field: 'UPDATED_AT' },
+    isOrg: true
   }),
   Page: ({ queryRef }) => {
     const data = usePreloadedQuery(query, queryRef)
     const isOrg = !!data?.organization
-    const owner = data.user ?? data.organization
+    const owner = data?.user ?? data?.organization
+    const repoOwner = data?.repositoryOwner
+    // const rendered = useMarkdown(owner?.bioMarkdown?.object?.text)
 
-    const rendered = useMarkdown(owner?.bioMarkdown?.object?.text)
-
-    console.log(rendered)
     return (
       <div className="flex flex-col flex-grow pl-2">
         {owner && (
@@ -105,7 +104,7 @@ export default defineVilay<{
               <div className="flex flex-col min-w-200px">
                 <h2 className=" text-xl">Popular</h2>
                 <ul>
-                  {owner.repositories.nodes?.map(
+                  {repoOwner?.repositories?.nodes?.map(
                     (node, i) =>
                       node && (
                         <li>
@@ -119,9 +118,9 @@ export default defineVilay<{
                 </ul>
                 <h2 className="my-6 text-xl">New Repos</h2>
                 <ul>
-                  {owner.newRepos.nodes?.map(
-                    (node, i) =>
-                      node && (
+                  {repoOwner?.newRepos?.nodes?.map(
+                    (node) =>
+                      (
                         <li>
                           <RepoItem
                             key={`${owner.link}-repos-${node.url}`}
@@ -137,19 +136,18 @@ export default defineVilay<{
                   <div
                     className="prose lg:prose-l markdown-body dark:bg-dark mb-6"
                     dangerouslySetInnerHTML={{ __html: owner?.bioHTML }}
-                  />{' '}
-                  {rendered?.result && (
+                  />
+                  {repoOwner?.bioMarkdown?.object?.text && (
                     <div className='prose lg:prose-l markdown-body dark:bg-dark'
                       dangerouslySetInnerHTML={{
-                        __html: rendered.result,
+                        __html: parseMarkdown( owner?.bioMarkdown?.object?.text),
                       }}
                     ></div>
                   )}
                 </div>
                 <h2 className="my-6 text-2xl">All Repositories</h2>
                 <PaginatedOwnerRepoList
-                  owner={owner}
-                  isOrg={isOrg}
+                  owner={repoOwner}
                   pageLength={queryRef.variables.first}
                 />
               </div>

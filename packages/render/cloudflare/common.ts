@@ -30,7 +30,7 @@ async function handleFetchEvent(
   }
 
   return assetHandler(...args)
-}
+} 
 function isAssetUrl(url: string) {
   const { pathname } = new URL(url)
   return pathname.startsWith('/assets/')

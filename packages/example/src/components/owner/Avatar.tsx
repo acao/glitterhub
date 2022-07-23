@@ -1,5 +1,6 @@
 import React from 'react'
 import { useFragment, graphql } from 'react-relay'
+import Label from '../Label'
 import LoginLink from './LoginLink'
 import { Avatar$key } from './__generated__/Avatar.graphql'
 
@@ -14,6 +15,8 @@ const query = graphql`
     avatarUrl
     name
     login
+    isViewer
+    isFollowingViewer
   }
   
 `
@@ -34,7 +37,7 @@ const Avatar: React.FC<Props> = ({ user, isOrg, width }) => {
   }
   const owner = useFragment(isOrg ? orgQuery : query, user)
   return (
-    <div>
+    <span>
       <img className={`${width ?? 'w-32'} rounded-full inline-flex mr-2`} src={owner.avatarUrl} />
 
       {owner.name ? (
@@ -44,7 +47,8 @@ const Avatar: React.FC<Props> = ({ user, isOrg, width }) => {
       ) : (
         <LoginLink login={owner.login} />
       )}
-    </div>
+      {owner.isViewer && <Label name="You" />}
+    </span>
   )
 }
 

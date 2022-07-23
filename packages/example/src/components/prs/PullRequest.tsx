@@ -1,10 +1,10 @@
 import React from 'react'
 import { graphql, useFragment } from 'react-relay'
-import Labels from '../Labels'
-import * as ItemCard from '../ItemCard'
+import Labels from '~/components/Labels'
+import * as ItemCard from '~/components/ItemCard'
 import type { PullRequest_data$key } from './__generated__/PullRequest_data.graphql'
-import LoginLink from '../owner/LoginLink'
-import Label from '../Label'
+import LoginLink from '~/components/owner/LoginLink'
+import Label from '~/components/Label'
 
 interface Props {
   pull: PullRequest_data$key

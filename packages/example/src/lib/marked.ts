@@ -1,7 +1,7 @@
 import { useAsync } from 'react-async-hook'
-
-const parseMarkdown = async (text) => {
-  const marked = await import('marked')
+import * as marked from 'marked'
+export const parseMarkdown = (text) => {
+  
   // const { toHtml } = await import('hast-util-to-html')
   // const { createStarryNight, common } = await import('@wooorm/starry-night')
   // const { default: langElixir } = await import(
@@ -19,6 +19,14 @@ const parseMarkdown = async (text) => {
   // const { default: langTextProto } = await import(
   //   '@wooorm/starry-night/lang/source.textproto'
   // )
+  // const starryNight = await createStarryNight([
+  //   ...common,
+  //   langElixir,
+  //   langErlang,
+  //   langToml,
+  //   langProto,
+  //   langTextProto,
+  // ])
 
   marked.setOptions({
     // renderer: new marked.Renderer(),
@@ -30,37 +38,25 @@ const parseMarkdown = async (text) => {
     smartLists: true,
     smartypants: false,
     xhtml: false,
-    // highlight: (value, lang, cb) => {
-    //   createStarryNight([
-    //     ...common,
-    //     langElixir,
-    //     langErlang,
-    //     langToml,
-    //     langProto,
-    //     langTextProto,
-    //   ]).then((starryNight) => {
-    //     const scope = starryNight.flagToScope(lang)
+    // highlight: (value, lang) => {
+    //   // const scope = starryNight.flagToScope(lang)
 
-    //     cb(
-    //       null,
-    //       toHtml({
-    //         type: 'element',
-    //         tagName: 'pre',
-    //         properties: {
-    //           className: scope
-    //             ? [
-    //                 'highlight',
-    //                 'highlight-' +
-    //                   scope.replace(/^source\./, '').replace(/\./g, '-'),
-    //               ]
-    //             : undefined,
-    //         },
-    //         children: scope
-    //           ? starryNight.highlight(value, scope).children
-    //           : [{ type: 'text', value }],
-    //       })
-    //     )
-    //   })
+    //   // return toHtml({
+    //   //   type: 'element',
+    //   //   tagName: 'pre',
+    //   //   properties: {
+    //   //     className: scope
+    //   //       ? [
+    //   //           'highlight',
+    //   //           'highlight-' +
+    //   //             scope.replace(/^source\./, '').replace(/\./g, '-'),
+    //   //         ]
+    //   //       : undefined,
+    //   //   },
+    //   //   children: scope
+    //   //     ? starryNight.highlight(value, scope).children
+    //   //     : [{ type: 'text', value }],
+    //   // })
     // },
   })
   return marked.parse(text)
@@ -71,7 +67,6 @@ export function useMarkdown(text: string) {
   }
 
   const result = useAsync(parseMarkdown, [text])
-
 
   return result
 }

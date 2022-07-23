@@ -1,5 +1,5 @@
 import { useFragment, graphql } from 'react-relay'
-import Label from '../Label'
+import Label from '~/components/Label'
 import RepoLink from './RepoLink'
 
 import type { FullRepoItem_meta$key } from './__generated__/FullRepoItem_meta.graphql'
@@ -55,6 +55,11 @@ export const FullRepoItem: React.FC<Props> = ({ repo }) => {
         name={`${data.forkCount} 🍴`}
         color="#3366c3"
       />
+      {data?.primaryLanguage && <Label
+        size={'xs'}
+        name={data?.primaryLanguage?.name}
+        color={data?.primaryLanguage?.color}
+      />}
       
     </div>
   )

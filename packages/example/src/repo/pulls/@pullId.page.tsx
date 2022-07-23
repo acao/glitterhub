@@ -10,6 +10,8 @@ import RepoLayout from '../layouts/RepoLayout'
 import Labels from '~/components/Labels'
 import LoginLink from '~/components/owner/LoginLink'
 import Label from '~/components/Label'
+import { PullRequestCommentList } from '~/components/prs/PullRequestCommentList'
+
 
 interface Props {
   queryRef: PreloadedQuery<PullIdByRepoQuery>
@@ -23,10 +25,11 @@ interface RouteParams {
 
 // Variables used in this query is constructed using the `getQueryVariables()` on preload.
 export const query = graphql`
-  query PullIdByRepoQuery($owner: String!, $name: String!, $pullId: Int!) {
+  query PullIdByRepoQuery($owner: String!, $name: String!, $pullId: Int!, $first: Int!, $cursor: String) {
     repository(name: $name, owner: $owner) {
       ...RepoLayout_header
       pullRequest(number: $pullId) {
+        ...PullRequestCommentList_comment
         id
         title
         bodyHTML
@@ -74,6 +77,7 @@ export default defineVilay<{
   getQueryVariables: (routeParams) => ({
     ...routeParams,
     pullId: parseInt(routeParams?.pullId, 10),
+    first: 10,
   }),
   // Relay pagination example.
   Page: ({ queryRef }) => {
@@ -109,12 +113,20 @@ export default defineVilay<{
                   </h3>
                 </p>
                 <div className="flex flex-row">
-                  <article
-                    className="flex-column w-3/4 text-sm no-wrap overflow-y-noscroll flex-row prose lg:prose-l markdown-body dark:bg-dark"
-                    dangerouslySetInnerHTML={{
-                      __html: pr.bodyHTML,
-                    }}
-                  />
+                <div className="flex-column w-3/4 flex-grow">
+                    <article
+                      className="w-full prose lg:prose-l markdown-body dark:bg-dark"
+                      dangerouslySetInnerHTML={{
+                        // __html: repository.issue.bodyHTML,
+                        __html: repository.pullRequest.bodyHTML,
+                      }}
+                    />
+                    {repository?.pullRequest && (
+                      <React.Suspense>
+                        <PullRequestCommentList pull={repository?.pullRequest} />
+                      </React.Suspense>
+                    )}
+                  </div>
                   <aside className="flex flex-column w-1/4">
                     <div>
                       <h3 className="text-l">Meta</h3>

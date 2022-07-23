@@ -20,10 +20,12 @@ export default function MyRepos() {
   return (
     <>
       <h2 className="my-6 text-xl">My Repos</h2>
+      <Suspense loading="Repos...">
         {data?.viewer.repositories.nodes?.map(
           (node, i) =>
             node && <RepoItem key={`${'my-repos'}-${i}`} repo={node} />
         )}
+        </Suspense>
     </>
   )
 }

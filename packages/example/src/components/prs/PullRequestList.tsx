@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { graphql, usePaginationFragment } from 'react-relay'
-import Button from '../Button'
-import PullRequestComponent from './PullRequest'
+import Button from '~/components/Button'
+import PullRequestComponent from '~/components/prs/PullRequest'
 import type { PullRequestList_repository$key } from './__generated__/PullRequestList_repository.graphql'
 
 interface Props {
@@ -87,7 +87,7 @@ const PullRequestListComponent: React.FC<Props> = ({ repository }) => {
           .map(
             (edge) =>
               edge?.node && (
-                <li key={edge?.node?.url || edge.node.id} className="card">
+                <li key={ edge.node.id || edge?.node?.url} className="card">
                   <Suspense fallback={'PR loading...'}>
                     <PullRequestComponent
                       pull={edge.node}

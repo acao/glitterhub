@@ -44,7 +44,7 @@ a:hover, a:focus {
     border-bottom: 1px  dashed white;
 }
 /* reset for the github css */
-.markdown-body a:hover, .markdown-body a:focus {
+.markdown-body a:hover, .markdown-body a:focus, .prose a:hover, .prose a:focus {
     border-bottom: inherit
 }
 
