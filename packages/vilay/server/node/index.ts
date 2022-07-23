@@ -11,13 +11,15 @@ export async function createServer(root: string) {
   const app = createApp({ onError })
 
   app.use(serveStatic(join(root, 'dist', 'client')))
-  app.use((req, res, next) => {
+  app.use(async (req, res, next) => {
     if (req.method !== 'GET') return next()
     if (req.url == null) return next(new Error('url is null'))
+    const userAgent = req.headers['user-agent']
+
     const pageContextInit = {
       url: req.url,
       cookies: useCookies(req),
-      userAgent: req.headers['user-agent'],
+      userAgent,
       fetch,
     }
     renderPage<PageContext, typeof pageContextInit>(pageContextInit).then(

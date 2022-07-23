@@ -12,11 +12,15 @@ body.dark {
 }
 
 .prose {
-    max-width: fit-content;
-    width: 80ch;
+    /* /* max-width: fit-content; */
+    max-width: 80ch;
     /* width: 100%; */
 }
 
+
+.w-prose {
+    max-width: 80ch;
+  }
 
 .markdown-body {
     padding: 6px

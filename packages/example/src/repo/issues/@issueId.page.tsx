@@ -90,7 +90,7 @@ export default defineVilay<{
                 <div className="flex flex-grow flex-row w-full">
                   <div className="flex-column w-3/4 flex-grow">
                     <article
-                      className="w-full prose lg:prose-l markdown-body dark:bg-dark"
+                      className="w-full prose lg:prose-l markdown-body dark:bg-dark min-h-6"
                       dangerouslySetInnerHTML={{
                         // __html: repository.issue.bodyHTML,
                         __html: repository.issue.bodyHTML,

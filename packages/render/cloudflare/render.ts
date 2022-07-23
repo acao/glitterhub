@@ -24,7 +24,7 @@ export async function render(req: Request, renderVps: typeof renderPage) {
     return null
   } else {
     const { contentType, statusCode } = httpResponse
-    return new Response(httpResponse.getWebStream(), {
+    return new Response(httpResponse.getReadableWebStream(), {
       status: statusCode,
       headers: {
         'Content-Type': `${contentType};charset=utf-8`,

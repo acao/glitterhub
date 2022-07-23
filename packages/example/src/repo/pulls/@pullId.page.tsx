@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
-import { defineVilay } from 'vilay'
+import { defineVilay, usePageContext } from 'vilay'
 import defaultDefines from '../../lib/renderer/_default.page'
 import type {
   PullIdByRepoQuery,
@@ -81,6 +81,8 @@ export default defineVilay<{
   }),
   // Relay pagination example.
   Page: ({ queryRef }) => {
+    const context = usePageContext()
+    console.log({context})
     const { repository } = usePreloadedQuery<PullIdByRepoQuery>(query, queryRef)
     const nameWithOwner = `${queryRef.variables.owner}/${queryRef.variables.name}`
     const pr = repository?.pullRequest
@@ -115,7 +117,7 @@ export default defineVilay<{
                 <div className="flex flex-row">
                 <div className="flex-column w-3/4 flex-grow">
                     <article
-                      className="w-full prose lg:prose-l markdown-body dark:bg-dark"
+                      className="w-full prose lg:prose-l markdown-body dark:bg-dark min-h-64"
                       dangerouslySetInnerHTML={{
                         // __html: repository.issue.bodyHTML,
                         __html: repository.pullRequest.bodyHTML,
@@ -136,10 +138,10 @@ export default defineVilay<{
                       </p>
                      
                         {pr?.labels?.nodes?.length > 0 && ( 
-                          <p className="text-xs">
+                          <div>
                             <h3 className="text-l">Labels</h3>
-                            <Labels labels={pr?.labels?.nodes} />
-                          </p>
+                            <Labels size='xs' labels={pr?.labels?.nodes} />
+                          </div>
                         )}
                     
                     </div>

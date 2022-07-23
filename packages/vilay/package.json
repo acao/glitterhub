@@ -26,6 +26,7 @@
     "h3": "^0.5.3",
     "listhen": "^0.2.6",
     "serve-static": "^1.15.0",
+    "ua-parser-js": "^1.0.2",
     "undici": "^5.1.1",
     "vite": "^2.9.6",
     "vite-plugin-ssr": "^0.4.11",
