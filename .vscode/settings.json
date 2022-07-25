@@ -1,3 +1,4 @@
 {
-    "relay.pathToConfig": "./packages/example/relay.config.json"
+    "relay.pathToConfig": "./packages/example/relay.config.json",
+    "relay.pathToRelay": "./packages/example/node_modules/.bin/relay-compiler"
 }

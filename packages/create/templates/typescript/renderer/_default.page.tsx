@@ -7,7 +7,7 @@ export default defineVilay({
   // Application-wide <head> tags
   // Meta tags are inserted as <meta name="${KEY}" content="${VALUE}">.
   // Other tags are inserted as <${KEY}>${VALUE}</${KEY}>.
-  getPageHead: (pageContext) => ({
+  getPageHead: (_pageContext) => ({
     title: 'New Vilay App',
     meta: {
       description: 'Just created with create-vilay',

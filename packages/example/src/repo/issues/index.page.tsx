@@ -40,7 +40,7 @@ export default defineVilay<{
   QueryVariables: issuesByRepoQuery$variables
 }>({
   // This overrides the application-wide <head> tag definition in `_default.page.tsx`
-  head: { ...defaultDefines.head, title: 'repo overview' },
+  getPageHead: () => ({ ...defaultDefines.head, title: 'repo overview' }),
   // If a page has `getQueryVariables` exported, it'll be called to get the variables used for preloading the query.
   // If it's not exported, route params will be directly used as variables.
   getQueryVariables: (routeParams) => ({

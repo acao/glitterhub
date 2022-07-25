@@ -13,10 +13,8 @@
     "@babel/runtime": "^7.17.8",
     "@types/marked": "^4.0.3",
     "@types/node": "^16.11.41",
-    "@types/prismjs": "^1.26.0",
     "@unocss/reset": "^0.30.8",
-    "@vilay/render": "workspace:../render",
-    "@wooorm/starry-night": "^1.2.0",
+    "@vilay/render": "*",
     "babel-plugin-relay": "^14.0.0",
     "debug": "^4.3.4",
     "github-markdown-css": "^5.1.0",
@@ -28,9 +26,9 @@
     "react-error-boundary": "^3.1.4",
     "react-relay": "^14.0.0",
     "relay-runtime": "^14.0.0",
-    "ua-parser-js": "^1.0.2",
     "unocss": "^0.30.8",
-    "vilay": "workspace:../vilay"
+    "vilay": "*",
+    "vite-plugin-ssr": "^0.4.11"
   },
   "devDependencies": {
     "@types/react": "^18.0.14",

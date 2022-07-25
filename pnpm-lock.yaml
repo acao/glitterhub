@@ -83,14 +83,12 @@ importers:
       '@babel/runtime': ^7.17.8
       '@types/marked': ^4.0.3
       '@types/node': ^16.11.41
-      '@types/prismjs': ^1.26.0
       '@types/react': ^18.0.14
       '@types/react-dom': ^18.0.5
       '@types/react-relay': ^13.0.2
       '@types/relay-runtime': ^13.0.3
       '@unocss/reset': ^0.30.8
-      '@vilay/render': workspace:../render
-      '@wooorm/starry-night': ^1.2.0
+      '@vilay/render': '*'
       babel-plugin-relay: ^14.0.0
       debug: ^4.3.4
       github-markdown-css: ^5.1.0
@@ -103,19 +101,17 @@ importers:
       react-relay: ^14.0.0
       relay-compiler: ^14.0.0
       relay-runtime: ^14.0.0
-      ua-parser-js: ^1.0.2
       unocss: ^0.30.8
-      vilay: workspace:../vilay
+      vilay: '*'
       vite: ^2.9.12
+      vite-plugin-ssr: ^0.4.11
       vite-tsconfig-paths: ^3.5.0
     dependencies:
       '@babel/runtime': 7.18.3
       '@types/marked': 4.0.3
       '@types/node': 16.11.41
-      '@types/prismjs': 1.26.0
       '@unocss/reset': 0.30.13
       '@vilay/render': link:../render
-      '@wooorm/starry-night': 1.2.0
       babel-plugin-relay: 14.0.0
       debug: 4.3.4
       github-markdown-css: 5.1.0
@@ -127,9 +123,9 @@ importers:
       react-error-boundary: 3.1.4_react@18.2.0
       react-relay: 14.0.0_react@18.2.0
       relay-runtime: 14.0.0
-      ua-parser-js: 1.0.2
       unocss: 0.30.13_debug@4.3.4
       vilay: link:../vilay
+      vite-plugin-ssr: 0.4.11_vite@2.9.12
     devDependencies:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
@@ -1076,10 +1072,6 @@ packages:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
     dev: true
 
-  /@types/prismjs/1.26.0:
-    resolution: {integrity: sha512-ZTaqn/qSqUuAq1YwvOFQfVW1AR/oQJlLSZVustdjwI+GZ8kr0MSHBj0tsXPW1EqHubx50gtBEjbPGsdZwQwCjQ==}
-    dev: false
-
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
 
@@ -1434,15 +1426,6 @@ packages:
       vscode-uri: 2.1.2
     dev: true
 
-  /@wooorm/starry-night/1.2.0:
-    resolution: {integrity: sha512-/D17IKC+sjN+EGa9ISlti2ClFeBAeyM5mSXwl4GsP7O9IxDwX1lDHNSrdNsDJRcKPq6KY9yN40p6b7m5q7YUGA==}
-    dependencies:
-      '@types/hast': 2.3.4
-      import-meta-resolve: 2.0.3
-      vscode-oniguruma: 1.6.2
-      vscode-textmate: 7.0.1
-    dev: false
-
   /@zkochan/rimraf/2.1.2:
     resolution: {integrity: sha512-Lc2oK51J6aQWcLWTloobJun5ZF41BbTDdLvE+aMcexoVWFoFqvZmnZoyXR2IZk6NJEVoZW8tjgtvQLfTsmRs2Q==}
     engines: {node: '>=12.10'}
@@ -1793,12 +1776,6 @@ packages:
       base64-js: 1.5.1
       ieee754: 1.2.1
     dev: true
-
-  /builtins/5.0.1:
-    resolution: {integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==}
-    dependencies:
-      semver: 7.3.7
-    dev: false
 
   /cac/6.7.12:
     resolution: {integrity: sha512-rM7E2ygtMkJqD9c7WnFU6fruFcN3xe4FM5yUmgxhZzIKJk4uHl9U/fhwdajGFQbQuv43FAUo1Fe8gX/oIKDeSA==}
@@ -3194,12 +3171,6 @@ packages:
       parent-module: 1.0.1
       resolve-from: 4.0.0
 
-  /import-meta-resolve/2.0.3:
-    resolution: {integrity: sha512-fpAppnBpZ3ymQ/dPP97TNsco1HB5+V9SYJ3chY50PP8xn4U/w+Y6ovWBmTImB/prmGsTjzPh8pQYY+EVBlr9mw==}
-    dependencies:
-      builtins: 5.0.1
-    dev: false
-
   /imurmurhash/0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
     engines: {node: '>=0.8.19'}
@@ -3669,6 +3640,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+    dev: true
 
   /magic-string/0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
@@ -5075,6 +5047,7 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
+    dev: true
 
   /send/0.18.0:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
@@ -5856,14 +5829,11 @@ packages:
 
   /vscode-oniguruma/1.6.2:
     resolution: {integrity: sha512-KH8+KKov5eS/9WhofZR8M8dMHWN2gTxjMsG4jd04YhpbPR91fUj7rYQ2/XjeHCJWbg7X++ApRIU9NUwM2vTvLA==}
+    dev: true
 
   /vscode-textmate/5.2.0:
     resolution: {integrity: sha512-Uw5ooOQxRASHgu6C7GVvUxisKXfSgW4oFlO+aa+PAkgmH89O3CXxEEzNRNtHSqtXFTl0nAC1uYj0GMSH27uwtQ==}
     dev: true
-
-  /vscode-textmate/7.0.1:
-    resolution: {integrity: sha512-zQ5U/nuXAAMsh691FtV0wPz89nSkHbs+IQV8FDk+wew9BlSDhf4UmWGlWJfTR2Ti6xZv87Tj5fENzKf6Qk7aLw==}
-    dev: false
 
   /vscode-uri/2.1.2:
     resolution: {integrity: sha512-8TEXQxlldWAuIODdukIb+TR5s+9Ds40eSJrw+1iDDA9IFORPjMELarNQE3myz5XIkWWpdprmJjm1/SxMlWOC8A==}
@@ -5982,6 +5952,7 @@ packages:
 
   /yallist/4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+    dev: true
 
   /yaml/1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
