@@ -38,7 +38,7 @@ export const FullRepoItem: React.FC<Props> = ({ repo }) => {
   )
 
   return (
-    <div className="min-h-30px">
+    <div className="min-h-34px">
       <RepoLink repo={data} size="l" labelSize="xs" />
       <Label
         size={'xs'}

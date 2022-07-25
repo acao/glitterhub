@@ -3,12 +3,12 @@ addEventListener('fetch', (event) => {
 })
 
 // use secrets
-// @ts-expect-error secrets
-const client_id = CLIENT_ID
-// @ts-expect-error secrets
-const client_secret = CLIENT_SECRET
 
 async function handle(request: Request) {
+  // @ts-expect-error secrets
+  const client_id = CLIENT_ID as string
+  // @ts-expect-error secrets
+  const client_secret = CLIENT_SECRET as string
   // handle CORS pre-flight request
   if (request.method === 'OPTIONS') {
     return new Response(null, {

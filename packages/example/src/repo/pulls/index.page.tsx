@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
 import { defineVilay } from 'vilay'
-import defaultDefines from '../../lib/renderer/_default.page'
+import defaultDefines from '../../renderer/_default.page'
 import PullRequestListComponent from '../../components/prs/PullRequestList'
 import type {
   pullsByRepoQuery,

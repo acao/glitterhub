@@ -31,14 +31,15 @@ export const IssueCommentList = ({
     query,
     issue
   )
+  const comments = data?.comments
   return (
     <div className="flex flex-col">
       <ul className="list-none list-outside">
-        {(data.comments.edges ?? [])
+        {(comments.edges ?? [])
           .map(
             (edge) =>
               edge?.node && (
-                <li key={edge?.node?.url || edge.node.id}>
+                <li key={edge.node.id}>
                   <Suspense fallback={'Comment loading...'}>
                     <Comment comment={edge.node} />
                   </Suspense>
@@ -49,7 +50,7 @@ export const IssueCommentList = ({
       </ul>
       {isLoadingNext
         ? 'Loading more...'
-        : data.comments.pageInfo.hasNextPage && (
+        : comments.pageInfo.hasNextPage && (
             <Button onClick={() => loadNext(10)}>Load more</Button>
           )}
     </div>

@@ -8,6 +8,8 @@ import { PageShell as DefaultPageShell } from './PageShell'
 import { RouteManager } from './routeManager'
 import type { PageContext } from '../types'
 
+// import { navigate } from "vite-plugin-ssr/client/router";
+
 let containerRoot: ReactDOMClient.Root | null = null
 let relayEnvironment: Environment | null = null
 let routeManager: RouteManager | null = null

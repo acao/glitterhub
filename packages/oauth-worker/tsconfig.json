@@ -4,7 +4,6 @@
       "module": "commonjs",
       "target": "esnext",
       "lib": ["esnext"],
-      "alwaysStrict": true,
       "strict": true,
       "preserveConstEnums": true,
       "moduleResolution": "node",

@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
 import { defineVilay, usePageContext } from 'vilay'
-import defaultDefines from '../../lib/renderer/_default.page'
+import defaultDefines from '../../renderer/_default.page'
 import type {
   PullIdByRepoQuery,
   PullIdByRepoQuery$variables,
@@ -82,7 +82,6 @@ export default defineVilay<{
   // Relay pagination example.
   Page: ({ queryRef }) => {
     const context = usePageContext()
-    console.log({context})
     const { repository } = usePreloadedQuery<PullIdByRepoQuery>(query, queryRef)
     const nameWithOwner = `${queryRef.variables.owner}/${queryRef.variables.name}`
     const pr = repository?.pullRequest

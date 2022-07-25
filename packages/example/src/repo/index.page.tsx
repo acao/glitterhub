@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
 import { defineVilay } from 'vilay'
-import defaultDefines from '../lib/renderer/_default.page'
+import defaultDefines from '../renderer/_default.page'
 import IssueListComponent from '../components/issues/IssueList'
 import PullRequestListComponent from '../components/prs/PullRequestList'
 import type {
@@ -44,6 +44,7 @@ export default defineVilay<{
   RouteParams: RouteParams
   QueryVariables: repoDataQuery$variables
 }>({
+  query,
   // This overrides the application-wide <head> tag definition in `_default.page.tsx`
   head: { ...defaultDefines.head, title: 'repo overview' },
   // If a page has `getQueryVariables` exported, it'll be called to get the variables used for preloading the query.
@@ -52,7 +53,9 @@ export default defineVilay<{
     ...routeParams,
     states: ['OPEN'],
     first: 10,
-    filter: {},
+    filter: {
+      states: ['OPEN']
+    },
   }),
   // Relay pagination example.
   Page: ({ queryRef }) => {

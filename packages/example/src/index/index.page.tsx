@@ -1,60 +1,63 @@
-import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
+import { useEffect, useState } from 'react'
+import { useAsync } from 'react-async-hook'
 import { defineVilay } from 'vilay'
-import { pagesPageQuery } from './__generated__/pagesPageQuery.graphql'
+import { usePageContext } from 'renderer/usePageContext'
+import { githubLogin } from '~/lib/service/github-login'
+import { useLoginContext } from '~/lib/service/useLoginContext'
 
-interface Props {
-  queryRef: PreloadedQuery<pagesPageQuery>
-}
 
-// If a page has `query` exported, it will be prefetched and SSR'd.
-export const query = graphql`
-  query indexQuery {
-    repository(owner: "XiNiHa", name: "vilay") {
-      name
-      stargazerCount
-      issues(first: 0) {
-        totalCount
-      }
-      openedIssues: issues(first: 0, filterBy: { states: OPEN }) {
-        totalCount
-      }
-    }
-  }
-`
+const FF_AUTH = import.meta.env.FF_AUTH
 
-export default defineVilay<{ PageProps: Props }>({
+export default defineVilay({
   // Basic data fetching example using Relay.
   Page: ({ queryRef }) => {
-    // This will either pull the preloaded data or suspend.
-    const data = usePreloadedQuery<pagesPageQuery>(query, queryRef)
 
-    const listItems = [
-      <>Name: {data.repository?.name}</>,
-      <>Stars: {data.repository?.stargazerCount}</>,
-      <>
-        Issues: {data.repository?.issues.totalCount} (
-        {data.repository?.openedIssues.totalCount} open)
-      </>,
-    ]
+    if(!FF_AUTH) {
+      return <div>Welcome to glitterhub!</div>
+    }
+    // This will either pull the preloaded data or suspend.
+    const page = usePageContext()
+
+    const user = useLoginContext()
+
+    const [code, setCode] = useState(null)
+
+
+    useEffect(() => {
+      if (!code) {
+        console.log('set code', page)
+        setCode(page?.urlParsed?.search?.code)
+      }
+    }, [page?.urlParsed?.search?.code])
+
+    if (user || !user?.token) {
+      const result = useAsync(githubLogin, [code])
+
+      if (result.loading) {
+        return <div>Logging in</div>
+      }
+      if (result.error) {
+        return <div>{result.error.toString()}</div>
+      }
+      if (result.result && user) {
+        user.setToken(result.result.token)
+        page.navigate(result.result.login)
+        return (
+          <div>
+            <h1>Welcome, {result.result?.login}</h1>
+          </div>
+        )
+      }
+    }
+
+    // login time!
 
     return (
-      <>
-        <h2 className="text-2xl mb-4">Welcome!</h2>
-        <p>
-          This is the main page for the template, rendered with some of the
-          actual information about the template repository:
-        </p>
-        <ul className="pl-4">
-          {listItems.map((item, i) => (
-            <li
-              key={i}
-              className="my-2 w-fit list-disc border-b border-black border-dashed hover:bg-blue-50 transition-colors duration-400"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </>
+      <div>
+        <h1>
+          Please, <a href="https://github-oauth.glitterhub.org">login!</a>
+        </h1>
+      </div>
     )
   },
 })

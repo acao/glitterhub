@@ -1,13 +1,6 @@
 declare global {
-
-    type GS = typeof globalThis & GlobalSecrets
-    
-    interface GlobalSecrets {
-        GH_TOK: string;
-      GH_TOKEN: string;
-      TOKEN: string;
-      VITE_GITHUB_TOKEN: string;
-    }
+      const GH_TOK: string;
+      const GH_TOKEN: string;
+      const TOKEN: string;
+      const VITE_GITHUB_TOKEN: string;
   }
-  
-  export {}

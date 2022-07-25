@@ -16,7 +16,7 @@ export const PageContextProvider: React.FC<Props> = ({
   return <Context.Provider value={pageContext}>{children}</Context.Provider>
 }
 
-export const usePageContext = () => {
-  const pageContext = useContext(Context)
+export const usePageContext = (context?: typeof Context) => {
+  const pageContext = useContext(context ?? Context)
   return pageContext
 }

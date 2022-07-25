@@ -81,6 +81,12 @@ const renderReact = (pageContext: PageContextBuiltIn & PageContext) => {
   })
   const relayQueryRef = preloadQuery(pageContext, relayEnvironment)
 
+  const routeManager = new RouteManager({
+    initialPage: Page,
+    queryRef: relayQueryRef,
+  })
+  pageContext.navigate = (path: string) => routeManager.setPage(path, relayQueryRef)
+
   const children = (
     <PageShell
       relayEnvironment={relayEnvironment}

@@ -7,7 +7,7 @@ import {
   OwnerIdPageQuery,
   OwnerIdPageQuery$variables,
 } from './__generated__/OwnerIdPageQuery.graphql'
-import { parseMarkdown } from '~/lib/marked'
+import { parseMarkdown } from '~/lib/service/marked'
 import PaginatedOwnerRepoList from '~/components/repos/PaginatedOwnerRepoList'
 
 interface Props {

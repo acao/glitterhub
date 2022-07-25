@@ -1,14 +1,14 @@
 import React from 'react'
 import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
 import { defineVilay } from 'vilay'
-import defaultDefines from '~/lib/renderer/_default.page'
+import defaultDefines from '~/renderer/_default.page'
 import type {
   readmePageRepoQuery,
   readmePageRepoQuery$variables,
 } from './__generated__/readmePageRepoQuery.graphql'
 import RepoLayout from './layouts/RepoLayout'
 
-import { useMarkdown } from '~/lib/marked'
+import { useMarkdown } from '~/lib/service/marked'
 
 
 interface Props {
@@ -53,14 +53,14 @@ export default defineVilay<{
   }),
   // Relay pagination example.
   Page: ({ queryRef }) => {
-    const issueData = usePreloadedQuery<readmePageRepoQuery>(query, queryRef)
+    const repoData = usePreloadedQuery<readmePageRepoQuery>(query, queryRef)
     const nameWithOwner = `${queryRef.variables.owner}/${queryRef.variables.name}`
     const readme =
-      issueData?.repository?.main?.text ?? issueData?.repository?.master?.text
+      repoData?.repository?.main?.text ?? repoData?.repository?.master?.text
     const rendered = useMarkdown(readme)
     return (
       <RepoLayout
-        repository={issueData.repository}
+        repository={repoData.repository}
         nameWithOwner={nameWithOwner}
       >
         <div className="flex flex-col flex-grow">

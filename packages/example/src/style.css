@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body.dark {
-    --color-fg-default: #c9d1d9;
+    --color-fg-default: #dde5ed;
 }
 
 
@@ -30,7 +30,7 @@ body.dark {
 
 }
 .dark, .dark p {
-    color: #c9d1d9
+    color: #dde5ed
 }
 
 button, input, optgroup, select, textarea {
@@ -40,16 +40,49 @@ button, input, optgroup, select, textarea {
     background-color: transparent;
 }
 
+aside table {
+    width: 100%;
+}
+aside table tr {
+    margin-bottom: 4px;
+    width: 100%;
+}
+
+aside table tr:hover, aside table tr:focus {
+    color: #dde5ed;
+    background-color: #1d1d1d
+}
+
+aside table td {
+    padding: 4px
+}
+
+/**
+I'm so old that css selectors like these are still unbelievable
+**/
+.prose :where(pre,code):not(.not-prose):not(pre>code)  {
+    background-color: var(--color-neutral-muted);
+}
+
 .markdown-body .highlight pre, .markdown-body code {
     font-size: 14px;
 }
 
+a {
+    border-bottom: 1px solid transparent;
+}
 a:hover, a:focus {
-    border-bottom: 1px  dashed white;
+    border-bottom: 1px  dashed #dde5ed;
 }
 /* reset for the github css */
 .markdown-body a:hover, .markdown-body a:focus, .prose a:hover, .prose a:focus {
-    border-bottom: inherit
+    border-bottom: 1px solid transparent;
+}
+.prose :where(:not(pre) > code):not(.not-prose)::after,
+.prose :where(:not(pre) > code):not(.not-prose)::before {
+    color: transparent;
+    max-width: 0;
+    display: inline-block;
 }
 
 code, article code {
@@ -59,6 +92,17 @@ code, article code {
     hyphens: none;
     display: inline-block;
     background-color: #4a4a4a;
+}
+code:hover, code:focus {
+  color:  #dde5ed
+}
+
+.card:hover code {
+    color:  #dde5ed
+}
+
+.prose pre + code {
+    background-color: transparent;
 }
 
 .highlight, article pre code {

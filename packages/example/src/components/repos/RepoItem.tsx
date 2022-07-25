@@ -24,14 +24,16 @@ export const RepoItem : React.FC<Props> = ({ repo }) => {
   )
 
   return (
-    <span className="text-base hover:text-1.05rem transition-all duration-300 text-sm">
+    <span className="text-base transition-all duration-300 text-sm">
     <a
+      className='hover:text-1.05rem'
       href={`/${data?.owner?.login}`}
     >
       {data?.owner?.login} 
     </a>
     {""}/{""}
     <a
+     className='hover:text-1.05rem'
       href={`/${data?.owner?.login}/${data?.name}`}
     >
       {data?.name} 

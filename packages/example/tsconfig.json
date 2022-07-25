@@ -11,7 +11,8 @@
     "esModuleInterop": true,
     "paths": {
       "~/components/*": ["./components/*"],
-      "~/lib/*": ["./lib/*"]
+      "~/lib/*": ["./lib/*"],
+      "~/renderer/*": ["./renderer/*"]
     },
   },
   "include": ["./src"]

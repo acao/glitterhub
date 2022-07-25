@@ -14,9 +14,5 @@
         "branches": [
             "main"
         ]
-    },
-    "dependencies": {
-        "@cloudflare/workers-types": "^3.8.0",
-        "@types/jest": "^28.1.6"
     }
 }

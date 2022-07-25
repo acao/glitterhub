@@ -1,14 +1,8 @@
-name = "glitterhub-github-oauth"
+name = "glitterhub-oauth-github"
 main = "./dist/worker.js"
 compatibility_date = "2022-05-04"
-account_id = ""
 workers_dev = true
-type = "javascript"
-
 
 [build]
-command = "pnpm build cloudflare-workers"
+command = "pnpm build"
 
-[vars]
-CLIENT_ID = "XX"
-CLIENT_SECRET = ""

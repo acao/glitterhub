@@ -28,11 +28,14 @@ export const Comment = ({ comment }: { comment: CommentData$key }) => {
   return (
     <div className="flex flex-row flex-grow">
       <div className="flex flex-col flex-grow p-6">
-        <div className="">
-          <Avatar width={'w-8'} user={data.author} /> | Created: {data.createdAt}
+        <div className="flex flex-row items-center">
+          <Avatar width={'w-8'} user={data.author} />{' '}
+          <span className="display-inl items-center self-center">
+            commented at: {data.createdAt}
+          </span>
         </div>
         <div
-          className="prose prose-m"
+          className="prose prose-m markdown-body dark:bg-dark"
           dangerouslySetInnerHTML={{ __html: data.bodyHTML }}
         />
       </div>
