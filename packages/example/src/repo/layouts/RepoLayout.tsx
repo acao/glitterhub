@@ -4,6 +4,7 @@ import RepoLink from '~/components/repos/RepoLink'
 import Labels from '~/components/Labels'
 
 import type { RepoLayout_header$key } from './__generated__/RepoLayout_header.graphql'
+import { usePageContext } from 'vilay'
 
 interface Props extends React.PropsWithChildren {
   repository?: RepoLayout_header$key
@@ -89,7 +90,10 @@ const RepoLayout: React.FC<Props> = ({
     'en-GB'
   )
 
-  const context = { url: '' }
+
+
+  const context = usePageContext()
+  console.log(context)
   // const [activeTab] = useState('overview')
   return (
     <div className="flex-col flex-grow">

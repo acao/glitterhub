@@ -44,7 +44,7 @@ export async function render(pageContext: PageContextBuiltIn & PageContext) {
   const { streamEnd } = stream
 
   const documentHtml = escapeInject`<!DOCTYPE html>
-    <html class="dark" lang="en">
+    <html lang="en">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,7 +52,7 @@ export async function render(pageContext: PageContextBuiltIn & PageContext) {
         ${dangerouslySkipEscape(headTags.join('\n'))}
         <!-- vilay-head-end -->
       </head>
-      <body>
+      <body class="dark dark-bg">
         <div id="page-view">${stream}</div>
         <script>let global = globalThis;</script>
       </body>
@@ -61,7 +61,7 @@ export async function render(pageContext: PageContextBuiltIn & PageContext) {
   return {
     documentHtml,
     pageContext: streamEnd
-      .then(() => ({  relayInitialData: getStoreSource().toJSON() }))
+      .then(() => ({ relayInitialData: getStoreSource().toJSON() }))
       .catch(() => ({})),
   }
 }
@@ -80,12 +80,6 @@ const renderReact = (pageContext: PageContextBuiltIn & PageContext) => {
     pageContext,
   })
   const relayQueryRef = preloadQuery(pageContext, relayEnvironment)
-
-  const routeManager = new RouteManager({
-    initialPage: Page,
-    queryRef: relayQueryRef,
-  })
-  pageContext.navigate = (path: string) => routeManager.setPage(path, relayQueryRef)
 
   const children = (
     <PageShell

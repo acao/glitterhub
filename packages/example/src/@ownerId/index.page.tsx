@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
 import { defineVilay } from 'vilay'
 import { RepoItem } from '~/components/repos/RepoItem'
@@ -27,7 +27,7 @@ export const query = graphql`
       avatarUrl
       url
       login
-      repositories(first: 10, orderBy: { field: STARGAZERS, direction: DESC }){
+      repositories(first: 10, orderBy: { field: STARGAZERS, direction: DESC }) {
         nodes {
           ...RepoItem_meta
         }
@@ -50,7 +50,7 @@ export const query = graphql`
       isViewer
       isFollowingViewer
       viewerIsFollowing
-      bioMarkdown: repository(name: $ownerId)  {
+      bioMarkdown: repository(name: $ownerId) {
         object(expression: "main:README.md") {
           ... on Blob {
             text
@@ -58,12 +58,12 @@ export const query = graphql`
         }
       }
     }
-    
+
     organization(login: $ownerId) {
       ...AvatarOrg
       avatarUrl
       name
-      bioMarkdown: repository(name: $ownerId)  {
+      bioMarkdown: repository(name: $ownerId) {
         object(expression: "main:README.md") {
           ... on Blob {
             text
@@ -71,8 +71,6 @@ export const query = graphql`
         }
       }
     }
-   
-
   }
 `
 
@@ -82,11 +80,10 @@ export default defineVilay<{
   RouteParams: { ownerId: string }
 }>({
   // Basic data fetching example using Relay.
-  getQueryVariables: (routeParams) => ({
+  getQueryVariables: ({ routeParams }) => ({
     ...routeParams,
     first: 25,
     orderBy: { direction: 'DESC', field: 'UPDATED_AT' },
-    isOrg: true
   }),
   Page: ({ queryRef }) => {
     const data = usePreloadedQuery(query, queryRef)
@@ -118,17 +115,14 @@ export default defineVilay<{
                 </ul>
                 <h2 className="my-6 text-xl">New Repos</h2>
                 <ul>
-                  {repoOwner?.newRepos?.nodes?.map(
-                    (node) =>
-                      (
-                        <li>
-                          <RepoItem
-                            key={`${owner.link}-repos-${node.url}`}
-                            repo={node}
-                          />
-                        </li>
-                      )
-                  )}
+                  {repoOwner?.newRepos?.nodes?.map((node) => (
+                    <li>
+                      <RepoItem
+                        key={`${owner.link}-new-repos-${node.url}`}
+                        repo={node}
+                      />
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="flex flex-col w-full ml-6 pl-4">
@@ -138,9 +132,10 @@ export default defineVilay<{
                     dangerouslySetInnerHTML={{ __html: owner?.bioHTML }}
                   />
                   {repoOwner?.bioMarkdown?.object?.text && (
-                    <div className='prose lg:prose-l markdown-body dark:bg-dark'
+                    <div
+                      className="prose lg:prose-l markdown-body dark:bg-dark"
                       dangerouslySetInnerHTML={{
-                        __html: parseMarkdown( owner?.bioMarkdown?.object?.text),
+                        __html: parseMarkdown(owner?.bioMarkdown?.object?.text),
                       }}
                     ></div>
                   )}

@@ -1,22 +1,14 @@
 import React from 'react'
-import { RelayEnvironmentProvider, type Environment } from 'react-relay'
 import type { PageContext } from 'vilay'
-import { RouteManager, useRouteManager } from 'vilay'
-import { LoginContextProvider } from '../service/useLoginContext'
-import { PageContextProvider } from './usePageContext'
+import { RouteManager, useRouteManager, VilayApp } from 'vilay'
 
 interface Props {
   pageContext: PageContext
-  relayEnvironment: Environment
   routeManager: RouteManager
 }
 
 // Page root component
-export const PageShell: React.FC<Props> = ({
-  pageContext,
-  relayEnvironment,
-  routeManager,
-}) => {
+export const PageShell: React.FC<Props> = ({ pageContext, routeManager }) => {
   const PageLayout =
     pageContext.exports?.PageLayout ??
     pageContext.exports?.pageLayout ??
@@ -24,21 +16,13 @@ export const PageShell: React.FC<Props> = ({
   const [CurrentPage, queryRef, routeTransitioning] =
     useRouteManager(routeManager)
 
-    console.log('my page shell')
-
   return (
     <React.StrictMode>
-      <PageContextProvider pageContext={pageContext}>
-      <LoginContextProvider>
-        <RelayEnvironmentProvider environment={relayEnvironment}>
-          
-            <PageLayout routeTransitioning={routeTransitioning}>
-              {CurrentPage && <CurrentPage queryRef={queryRef} />}
-            </PageLayout>
-         
-        </RelayEnvironmentProvider>
-        </LoginContextProvider>
-      </PageContextProvider>
+      <VilayApp>
+        <PageLayout routeTransitioning={routeTransitioning}>
+          {CurrentPage && <CurrentPage queryRef={queryRef} />}
+        </PageLayout>
+      </VilayApp>
     </React.StrictMode>
   )
 }

@@ -71,7 +71,7 @@ export default defineVilay<{
   getPageHead: () => ({ ...defaultDefines.head, title: 'repo overview' }),
   // If a page has `getQueryVariables` exported, it'll be called to get the variables used for preloading the query.
   // If it's not exported, route params will be directly used as variables.
-  getQueryVariables: (routeParams) => {
+  getQueryVariables: ({ routeParams }) => {
     return {
       ...routeParams,
       issueId: parseInt(routeParams?.issueId, 10),
