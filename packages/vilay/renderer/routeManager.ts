@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type { PreloadedQuery } from 'react-relay'
 import type { OperationType } from 'relay-runtime'
 import type { PageContext } from '../types'

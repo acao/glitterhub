@@ -84,6 +84,7 @@ yargs(hideBin(argv))
               sourcemap: true,
               outfile: './dist/client/_worker.js',
               logLevel: 'warning',
+              sourcesContent: false,
               format: 'esm',
               target: 'es2020',
               bundle: true,
@@ -119,6 +120,7 @@ yargs(hideBin(argv))
               logLevel: 'warning',
               format: 'esm',
               target: 'es2020',
+              sourcesContent: false,
               bundle: true,
               minify: !noMinify,
               define: {

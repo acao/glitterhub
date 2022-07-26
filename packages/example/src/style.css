@@ -2,130 +2,144 @@
 @tailwind components;
 @tailwind utilities;
 
-body.dark {
-    --color-fg-default: #dde5ed;
+.prose a,
+.prose img {
+  display: inline-block;
 }
 
-
-.prose a, .prose img {
-    display: inline-block
+@media (min-width: 100rem) {
+  .prose {
+    max-width: 70ch;
+  }
 }
 
-.prose {
-    /* /* max-width: fit-content; */
-    max-width: 80ch;
-    /* width: 100%; */
-}
-
-
-.w-prose {
-    max-width: 80ch;
+@media (min-width: 110rem) {
+    .prose {
+      max-width: 90ch;
+    }
   }
 
 .markdown-body {
-    padding: 6px
+  padding: 6px;
+  background-color: transparent;
+  color: inherit;
 }
 
 .dark .markdown-body {
-
-}
-.dark, .dark p {
-    color: #dde5ed
+  background-color: transparent;
+  /* color:  */
 }
 
-button, input, optgroup, select, textarea {
-    padding: 2px;
+button,
+input,
+optgroup,
+select,
+textarea {
+  padding: 2px;
 }
-.dark button, .dark input, .dark optgroup, .dark select, textarea {
-    background-color: transparent;
+.dark button,
+.dark input,
+.dark optgroup,
+.dark select,
+textarea {
+  background-color: transparent;
 }
 
 aside table {
-    width: 100%;
+  width: 100%;
 }
 aside table tr {
-    margin-bottom: 4px;
-    width: 100%;
+  margin-bottom: 4px;
+  width: 100%;
 }
 
-aside table tr:hover, aside table tr:focus {
-    color: #dde5ed;
-    background-color: #1d1d1d
+aside table tr:hover,
+aside table tr:focus {
+  color: #dde5ed;
+  background-color: #1d1d1d;
 }
 
 aside table td {
-    padding: 4px
+  padding: 4px;
 }
 
 /**
 I'm so old that css selectors like these are still unbelievable
 **/
-.prose :where(pre,code):not(.not-prose):not(pre>code)  {
-    background-color: var(--color-neutral-muted);
+.prose :where(pre, code):not(.not-prose):not(pre > code) {
+  background-color: var(--color-neutral-muted);
 }
 
-.markdown-body .highlight pre, .markdown-body code {
-    font-size: 14px;
+.markdown-body .highlight pre,
+.markdown-body code {
+  font-size: 14px;
 }
 
-a {
-    border-bottom: 1px solid transparent;
+.markdown-body a {
+  border-bottom: 1px solid transparent;
 }
-a:hover, a:focus {
-    border-bottom: 1px  dashed #dde5ed;
+.markdown-body a:hover,
+.markdown-body a:focus {
+  border-bottom: 1px dashed #dde5ed;
 }
 /* reset for the github css */
-.markdown-body a:hover, .markdown-body a:focus, .prose a:hover, .prose a:focus {
-    border-bottom: 1px solid transparent;
+.markdown-body a:hover,
+.markdown-body a:focus,
+.prose a:hover,
+.prose a:focus {
+  border-bottom: 1px solid transparent;
 }
 .prose :where(:not(pre) > code):not(.not-prose)::after,
 .prose :where(:not(pre) > code):not(.not-prose)::before {
-    color: transparent;
-    max-width: 0;
-    display: inline-block;
+  color: transparent;
+  max-width: 0;
+  display: inline-block;
 }
 
-code, article code {
-    padding: 2px;
-    margin: 1px 2px;
-    border-radius: 3px;
-    hyphens: none;
-    display: inline-block;
-    background-color: #4a4a4a;
+code,
+article code {
+  padding: 2px;
+  margin: 1px 2px;
+  border-radius: 3px;
+  hyphens: none;
+  display: inline-block;
+  background-color: #4a4a4a;
 }
-code:hover, code:focus {
-  color:  #dde5ed
+code:hover,
+code:focus {
+  color: #dde5ed;
 }
 
 .card:hover code {
-    color:  #dde5ed
+  color: #dde5ed;
 }
 
 .prose pre + code {
-    background-color: transparent;
+  background-color: transparent;
 }
 
-.highlight, article pre code {
-    background-color: #1d1d1d;
-    overflow: scroll-y;
-    
+.highlight,
+article pre code {
+  background-color: #1d1d1d;
+  overflow: scroll-y;
 }
 
 .highlight span.token.operator {
-    background: transparent;
+  background: transparent;
 }
 
-.highlight code, .snippet-clipboard-content code  {
-    background-color: transparent;
+.highlight code,
+.snippet-clipboard-content code {
+  background-color: transparent;
 }
 
 article img {
-    object-fit: contain;
+  object-fit: contain;
 }
 
 article h2 {
- font-size: 16px;
+  font-size: 16px;
 }
 article h3 {
-    font-size: 14px;
+  font-size: 14px;
 }

@@ -22,9 +22,9 @@ export const initRelayEnvironment: InitRelayEnvironment = ({
       console.error('no GH_TOKEN found')
       return null
     }
-    if (token) {
-      console.log('token!')
-    }
+    // if (token) {
+    //   console.log('token!')
+    // }
     // Using GitHub API for example
     const response = await fetch('https://api.github.com/graphql', {
       method: 'POST',

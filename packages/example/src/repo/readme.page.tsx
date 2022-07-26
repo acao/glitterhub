@@ -30,7 +30,7 @@ export const query = graphql`
           text
         }
       }
-      master: object(expression: "master  :README.md") {
+      master: object(expression: "master:README.md") {
         ... on Blob {
           text
         }

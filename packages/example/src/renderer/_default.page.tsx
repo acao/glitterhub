@@ -1,8 +1,12 @@
-import { defineVilay } from 'vilay'
+import { defineVilay  } from 'vilay'
 import { PageLayout } from './PageLayout'
 import { initRelayEnvironment } from './RelayEnvironment'
 
+import { PageShell } from './PageShell'
+
+
 export default defineVilay({
+  PageShell,
   // Export that has the name `PageLayout` is used as the layout component
   PageLayout,
   // Export that has the name `initRelayEnvironment` is used for initializing Relay Environment

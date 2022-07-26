@@ -30,8 +30,9 @@ const NavLink: React.FC<NavLinkProps> = ({
   return (
     <li
       key={href}
-      className="pl-2 pr-2 border-b dark:border-black dark:hover:border-white"
-      style={{ borderColor: active ? 'white' : 'transparent' }}
+      className={`p-2 border-b border-b-1 border-transparent dark:hover:border-light dark:border-${
+        active ? 'dark dark:border-light' : 'transparent'
+      }`}
     >
       <a href={href}>{label}</a>
     </li>
@@ -90,15 +91,12 @@ const RepoLayout: React.FC<Props> = ({
     'en-GB'
   )
 
-
-
-  const context = usePageContext()
-  console.log(context)
+  const { urlPathname } = usePageContext()
   // const [activeTab] = useState('overview')
   return (
     <div className="flex-col flex-grow">
       <h2 className="text-3xl pb-4 flex-row">
-        <RepoLink repo={data} labelSize='sm' />
+        <RepoLink repo={data} labelSize="sm" />
       </h2>
       <p className="text-sm pb-4">{data?.description}</p>
       <p className="text-sm pb-4">
@@ -121,24 +119,24 @@ const RepoLayout: React.FC<Props> = ({
         <NavLink
           nameWithOwner={nameWithOwner}
           label="Overview"
-          active={context?.url.endsWith(nameWithOwner)}
+          active={urlPathname === `/${nameWithOwner}`}
         />
         <NavLink
           nameWithOwner={nameWithOwner}
           label="Issues"
-          active={context?.url.includes('/issues')}
+          active={urlPathname.includes('/issues')}
           urlSuffix="issues"
         />
         <NavLink
           nameWithOwner={nameWithOwner}
           label="Pull Requests"
-          active={context?.url.includes('/pulls')}
+          active={urlPathname.includes('/pulls')}
           urlSuffix="pulls"
         />
         <NavLink
           nameWithOwner={nameWithOwner}
           label="Readme"
-          active={context?.url.includes('/readme')}
+          active={urlPathname.includes('/readme')}
           urlSuffix="readme"
         />
       </ul>

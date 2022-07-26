@@ -52,7 +52,7 @@ export async function render(pageContext: PageContextBuiltIn & PageContext) {
         ${dangerouslySkipEscape(headTags.join('\n'))}
         <!-- vilay-head-end -->
       </head>
-      <body class="dark dark-bg">
+      <body class="dark">
         <div id="page-view">${stream}</div>
         <script>let global = globalThis;</script>
       </body>

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary'
-import { PageLayoutProps } from 'vilay'
+import { PageLayoutProps, usePageContext } from 'vilay'
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
 import 'github-markdown-css/github-markdown.css'
@@ -23,8 +23,9 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   }
   let token
 
+  const context = usePageContext()
   return (
-    <div className="dark:bg-dark dark:text-slate-100">
+    <div className=" dark:bg-dark dark:text-slate-100">
       {/* <link
           href="https://unpkg.com/prismjs@v1.x/themes/prism.css"
           rel="stylesheet"

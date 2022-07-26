@@ -106,7 +106,7 @@ export default defineVilay<{
                   )}
                 </h3>
                 <div className="flex flex-grow flex-row w-full">
-                  <div className="flex-column w-3/4 flex-grow">
+                  <div className="flex-column w-2/3 flex-grow">
                     <article
                       className="w-full prose lg:prose-l markdown-body dark:bg-dark min-h-6"
                       dangerouslySetInnerHTML={{
@@ -120,7 +120,7 @@ export default defineVilay<{
                       </React.Suspense>
                     )}
                   </div>
-                  <aside className="flex flex-column w-1/4 min-w-200px">
+                  <aside className="flex flex-column w-1/3 min-w-200px">
                     <div className="ml-4 w-full">
                       <ItemCard.ItemCard>
                         <ItemCard.Body>

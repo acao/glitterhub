@@ -46,7 +46,7 @@ export default defineVilay<{
 }>({
   query,
   // This overrides the application-wide <head> tag definition in `_default.page.tsx`
-  getPageHead: () => ({ ...defaultDefines.head, title: 'repo overview' }),
+  getPageHead: () => ({ title: 'repo overview' }),
   // If a page has `getQueryVariables` exported, it'll be called to get the variables used for preloading the query.
   // If it's not exported, route params will be directly used as variables.
   getQueryVariables: ({ routeParams }) => ({
@@ -59,7 +59,8 @@ export default defineVilay<{
   }),
   // Relay pagination example.
   Page: ({ queryRef }) => {
-    const nameWithOwner = `${queryRef.variables.owner}/${queryRef.variables.name}`
+    console.log('hey')
+    const nameWithOwner = `${queryRef?.variables?.owner}/${queryRef?.variables?.name}`
     const issueData = usePreloadedQuery<repoDataQuery>(query, queryRef)
 
     if(!issueData?.repository) {
@@ -68,14 +69,14 @@ export default defineVilay<{
 
     return (
       <RepoLayout
-        repository={issueData.repository}
+        repository={issueData?.repository}
         nameWithOwner={nameWithOwner}
       >
         <div className="flex flex-col flex-grow w-full">
           <h3 className="text-xl">
             <a href={`/${nameWithOwner}/issues`}>Recent Issues</a>
           </h3>
-          {issueData.repository && (
+          {issueData?.repository && (
             <React.Suspense fallback="Loading...">
               <IssueListComponent repository={issueData.repository} />
             </React.Suspense>
@@ -85,7 +86,7 @@ export default defineVilay<{
           <h3 className="text-xl">
             <a href={`/${nameWithOwner}/pulls`}>Recent Pull Requests</a>
           </h3>
-          {issueData.repository && (
+          {issueData?.repository && (
             <React.Suspense fallback="Loading...">
               <PullRequestListComponent repository={issueData.repository} />
             </React.Suspense>

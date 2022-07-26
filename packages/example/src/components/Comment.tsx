@@ -31,7 +31,7 @@ export const Comment = ({ comment }: { comment: CommentData$key }) => {
         <div className="flex flex-row items-center">
           <Avatar width={'w-8'} user={data.author} />{' '}
           <span className="display-inl items-center self-center">
-            commented at: {data.createdAt}
+            commented at: {new Date(data.createdAt).toLocaleString()}
           </span>
         </div>
         <div

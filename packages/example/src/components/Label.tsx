@@ -15,12 +15,11 @@ const Label: React.FC<LabelProps> = ({ name, color, size }) => {
   }
   return (
     <span
-      className={`p-1 inline-flex m-1 drop-shadow-md hover:text-.9rem hover:p-1.05 dark:color-black dark:drop-shadow-md:grayscale-9 text-${
+      className={`p-1 inline-flex m-1 drop-shadow-md hover:text-.9rem hover:p-1.05 dark:color-black dark:drop-shadow-md:grayscale-9 rounded-4px text-${
         size ?? 'xs'
       }`}
       style={{
         backgroundColor: color?.startsWith('#') ? color : `#${color}`,
-        borderRadius: '4px',
       }}
       key={name}
     >

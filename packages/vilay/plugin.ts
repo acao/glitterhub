@@ -1,5 +1,5 @@
 import type { PluginOption } from 'vite'
-import reactplugin from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react'
 import ssr from 'vite-plugin-ssr/plugin'
 import relay from 'babel-plugin-relay'
 import { transformSync } from '@babel/core'
@@ -63,7 +63,7 @@ const viteConfigPlugin: PluginOption = {
 }
 
 const plugin = (config: RecursivePartial<Config> = {}): PluginOption[] => [
-  reactplugin(),
+  react(),
   ssr({ pageFiles: { include: ['vilay'] } }),
   relayPlugin,
   configPlugin(config),

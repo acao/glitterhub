@@ -13,15 +13,15 @@ type Props = {
 const RepoLink: React.FC<Props> = ({ repo, labelSize = 'sm', size = 'md' }) => {
   return (
     <span className={`text-${size}`}>
-      <a href={`/${repo.owner.login}`}>{repo.owner.login}</a>/
-      <a href={`/${repo.owner.login}/${repo.name}`}>{repo.name}</a>
-      {repo.isFork && (
+      <a href={`/${repo?.owner?.login}`}>{repo?.owner?.login}</a>/
+      <a href={`/${repo?.owner?.login}/${repo?.name}`}>{repo.name}</a>
+      {repo?.isFork && (
         <Label size={labelSize} name="Fork" color="#eee" />
       )}{' '}
-      {repo.isPrivate && (
+      {repo?.isPrivate && (
         <Label size={labelSize} name="Private" color="#eee" />
       )}
-      {repo.isAchived && (
+      {repo?.isAchived && (
         <Label size={labelSize} name="Archived" color="#eee" />
       )}
     </span>

@@ -11,7 +11,8 @@ import Labels from '~/components/Labels'
 import LoginLink from '~/components/owner/LoginLink'
 import Label from '~/components/Label'
 import { PullRequestCommentList } from '~/components/prs/PullRequestCommentList'
-
+import * as ItemCard from '~/components/ItemCard'
+import Author from '~/components/owner/Author'
 
 interface Props {
   queryRef: PreloadedQuery<PullIdByRepoQuery>
@@ -47,10 +48,7 @@ export const query = graphql`
         viewerCanReact
         viewerCanUpdate
         viewerCanSubscribe
-        author {
-          login
-          url
-        }
+        ...Author_pr
         checksResourcePath
         changedFiles
         isDraft
@@ -116,7 +114,7 @@ export default defineVilay<{
                 <div className="flex flex-row">
                 <div className="flex-column w-3/4 flex-grow">
                     <article
-                      className="w-full prose lg:prose-l markdown-body dark:bg-dark min-h-64"
+                      className="w-full prose lg:prose-l markdown-body dark:bg-dark min-h-42"
                       dangerouslySetInnerHTML={{
                         // __html: repository.issue.bodyHTML,
                         __html: repository.pullRequest.bodyHTML,
@@ -128,21 +126,22 @@ export default defineVilay<{
                       </React.Suspense>
                     )}
                   </div>
-                  <aside className="flex flex-column w-1/4">
-                    <div>
-                      <h3 className="text-l">Meta</h3>
-                      <p className="text-sm">{pr.updatedAt}</p>
-                      <p>
-                        author: <LoginLink login={pr.author.login} />
-                      </p>
-                     
-                        {pr?.labels?.nodes?.length > 0 && ( 
-                          <div>
-                            <h3 className="text-l">Labels</h3>
-                            <Labels size='xs' labels={pr?.labels?.nodes} />
-                          </div>
-                        )}
-                    
+                  <aside className="flex flex-column w-1/4 min-w-200px">
+                    <div className="ml-4 w-full">
+                      <ItemCard.ItemCard>
+                        <ItemCard.Body>
+                          <Author pr={pr} />
+                        </ItemCard.Body>
+                      </ItemCard.ItemCard>
+
+                      {pr?.labels?.nodes?.length > 0 && (
+                        <ItemCard.ItemCard>
+                          <ItemCard.Header>Labels</ItemCard.Header>
+                          <ItemCard.Body>
+                            <Labels labels={pr?.labels?.nodes} size="xs" />
+                          </ItemCard.Body>
+                        </ItemCard.ItemCard>
+                      )}
                     </div>
                   </aside>
                 </div>

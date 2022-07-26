@@ -27,6 +27,7 @@ export const PageShell: React.FC<PageShellProps> = ({
     pageContext?.exports?.PageLayout ??
     pageContext?.exports?.pageLayout ??
     Passthrough
+
   return (
     <React.StrictMode>
       <VilayApp relayEnvironment={relayEnvironment} pageContext={pageContext}>
