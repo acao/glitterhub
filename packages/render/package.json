@@ -8,9 +8,12 @@
   "type": "module",
   "scripts": {
     "prepublish": "pnpm build",
-    "build": "node build.mjs && tsc --emitDeclarationOnly"
+    "build": "nanobundle build --conditions worker --conditions browser"
   },
   "types": "./dist/index.d.ts",
+  "dependencies": {
+    "debug": "^4.3.4"
+  },
   "exports": {
     "node": {
       "require": "./dist/node/index.cjs",
@@ -18,12 +21,20 @@
     },
     "default": "./dist/index.mjs"
   },
+  "imports": {
+    "debug": {
+      "node": "debug/src/node.js",
+      "default": "debug/src/browser.js"
+    }
+  },
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18",
-    "vite-plugin-ssr": ">=0.4"
+    "vite-plugin-ssr": ">=0.4",
+    "react-streaming": ">=0.2.18"
   },
   "devDependencies": {
+    "nanobundle": "^0.0.28",
     "@cloudflare/workers-types": "^3.8.0",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "cookie-es": "^0.5.0",

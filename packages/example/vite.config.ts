@@ -9,7 +9,12 @@ const config: UserConfig = {
     tsconfigPaths(),
     vilay(),
     unocss({ presets: [presetUno(), presetTypography()] }),
-  ]
+  ],
+  build: {
+    rollupOptions: {
+      external: ["lowlife"]
+    }
+  }
 }
 
 export default config

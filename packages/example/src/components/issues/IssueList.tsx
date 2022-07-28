@@ -47,7 +47,7 @@ const IssueListComponent: React.FC<Props> = ({ repository }) => {
   )
 
 
-  const [issueStates, setStateFilter] = useState<('OPEN' | 'CLOSED')[]>(['OPEN'])
+  const [issueStates, setStateFilter] = useState<('OPEN' | 'CLOSED')[]>()
 
   useEffect(() => {
     if(issueStates) {
@@ -62,13 +62,13 @@ const IssueListComponent: React.FC<Props> = ({ repository }) => {
     <div className="py-4">
       <div className="mb-1">
         <span
-          className={tabClass(!!issueStates.includes('OPEN'))}
+          className={tabClass(!!issueStates?.includes('OPEN'))}
           onClick={() => setStateFilter(['OPEN'])}
         >
           open: {data?.openIssues?.count}{' '}
         </span>
         <span
-          className={tabClass(!!issueStates.includes('CLOSED'))}
+          className={tabClass(!!issueStates?.includes('CLOSED'))}
           onClick={() => setStateFilter(['CLOSED'])}
         >
           {' '}
@@ -80,7 +80,7 @@ const IssueListComponent: React.FC<Props> = ({ repository }) => {
           .map(
             (edge, i) =>
               edge?.node && (
-                <li key={edge.node.url} className="">
+                <li key={edge.node.id ?? edge?.node?.url} className="">
                   <Suspense fallback={'Issue loading...'}>
                     <IssueComponent issue={edge.node} nameWithOwner={data.nameWithOwner} />
                   </Suspense>

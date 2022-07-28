@@ -47,6 +47,7 @@ await Promise.all([
     external,
     define: {
       IS_CLOUDFLARE_WORKER: 'true',
+      'process.env.NODE_ENV': JSON.stringify('production'),
     },
   }),
 ])

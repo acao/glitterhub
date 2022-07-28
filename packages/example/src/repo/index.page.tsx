@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql, usePreloadedQuery, type PreloadedQuery } from 'react-relay'
 import { defineVilay } from 'vilay'
-import defaultDefines from '../renderer/_default.page'
 import IssueListComponent from '../components/issues/IssueList'
 import PullRequestListComponent from '../components/prs/PullRequestList'
 import type {
@@ -31,7 +30,6 @@ export const query = graphql`
     $states: [PullRequestState!]!
   ) {
     repository(name: $name, owner: $owner) {
-      id
       ...RepoLayout_header
       ...IssueList_repository
       ...PullRequestList_repository
@@ -51,15 +49,14 @@ export default defineVilay<{
   // If it's not exported, route params will be directly used as variables.
   getQueryVariables: ({ routeParams }) => ({
     ...routeParams,
-    states: ['OPEN'],
     first: 10,
     filter: {
       states: ['OPEN']
     },
+    states: ['OPEN'],
   }),
   // Relay pagination example.
   Page: ({ queryRef }) => {
-    console.log('hey')
     const nameWithOwner = `${queryRef?.variables?.owner}/${queryRef?.variables?.name}`
     const issueData = usePreloadedQuery<repoDataQuery>(query, queryRef)
 

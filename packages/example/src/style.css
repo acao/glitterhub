@@ -7,6 +7,10 @@
   display: inline-block;
 }
 
+.prose a[aria-hidden=true] {
+  text-decoration: none;
+}
+
 @media (min-width: 100rem) {
   .prose {
     max-width: 70ch;
@@ -131,6 +135,14 @@ article pre code {
 .highlight code,
 .snippet-clipboard-content code {
   background-color: transparent;
+}
+
+span.icon.icon-link:before {
+  content: "#";
+  color: #ccc
+}
+span.icon.icon-link {
+  font-size: 80%;
 }
 
 article img {

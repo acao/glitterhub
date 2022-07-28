@@ -18,6 +18,7 @@ export const FullRepoItem: React.FC<Props> = ({ repo }) => {
           login
         }
         nameWithOwner
+
         isFork
         isPrivate
         isArchived

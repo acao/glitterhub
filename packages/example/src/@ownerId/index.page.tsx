@@ -23,7 +23,6 @@ export const query = graphql`
     $orderBy: RepositoryOrder
   ) {
     repositoryOwner(login: $ownerId) {
-      ...PaginatedOwnerRepoList_owner
       avatarUrl
       url
       login
@@ -40,6 +39,14 @@ export const query = graphql`
           ...RepoItem_meta
         }
       }
+      bioMarkdown: repository(name: $ownerId) {
+        object(expression: "main:README.md") {
+          ... on Blob {
+            text
+          }
+        }
+      }
+      ...PaginatedOwnerRepoList_owner
     }
     user(login: $ownerId) {
       ...Avatar
@@ -50,26 +57,12 @@ export const query = graphql`
       isViewer
       isFollowingViewer
       viewerIsFollowing
-      bioMarkdown: repository(name: $ownerId) {
-        object(expression: "main:README.md") {
-          ... on Blob {
-            text
-          }
-        }
-      }
     }
 
     organization(login: $ownerId) {
       ...AvatarOrg
       avatarUrl
       name
-      bioMarkdown: repository(name: $ownerId) {
-        object(expression: "main:README.md") {
-          ... on Blob {
-            text
-          }
-        }
-      }
     }
   }
 `
@@ -141,10 +134,10 @@ export default defineVilay<{
                   )}
                 </div>
                 <h2 className="my-6 text-2xl">All Repositories</h2>
-                <PaginatedOwnerRepoList
+                {repoOwner && <Suspense><PaginatedOwnerRepoList
                   owner={repoOwner}
                   pageLength={queryRef.variables.first}
-                />
+                /></Suspense>}
               </div>
             </div>
           </Suspense>

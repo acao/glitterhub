@@ -1,8 +1,6 @@
 import { Suspense } from 'react'
-import { useFragment, usePaginationFragment } from 'react-relay'
+import { usePaginationFragment } from 'react-relay'
 import { graphql } from 'relay-runtime'
-import Avatar from '../owner/Avatar'
-import { CommentData$key } from '../__generated__/CommentData.graphql'
 import { IssueCommentList_comment$key } from './__generated__/IssueCommentList_comment.graphql'
 
 import { Comment } from '../Comment'
@@ -39,8 +37,9 @@ export const IssueCommentList = ({
           .map(
             (edge) =>
               edge?.node && (
-                <li key={edge.node.id}>
+                <li key={edge.node.id ?? edge?.node?.url} className="card">
                   <Suspense fallback={'Comment loading...'}>
+                    <span>{edge.node.id ?? edge?.node?.url}</span>
                     <Comment comment={edge.node} />
                   </Suspense>
                 </li>

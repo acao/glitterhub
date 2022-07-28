@@ -49,8 +49,8 @@ const PullRequestListComponent: React.FC<Props> = ({ repository }) => {
   )
 
   const [prStates, setStateFilter] = React.useState<
-    ('OPEN' | 'CLOSED' | 'MERGED')[]
-  >(['OPEN'])
+    ('OPEN' | 'CLOSED' | 'MERGED')[] | null
+  >(null)
 
   useEffect(() => {
     if (prStates) {
@@ -63,19 +63,19 @@ const PullRequestListComponent: React.FC<Props> = ({ repository }) => {
     <div className="py-4">
       <div className="mb-1">
         <span
-          className={tabClass(!!prStates.includes('OPEN'))}
+          className={tabClass(!!prStates?.includes('OPEN'))}
           onClick={() => setStateFilter(['OPEN'])}
         >
           open: {data?.openPullRequests?.count}
         </span>{' '}
         <span
-          className={tabClass(!!prStates.includes('MERGED'))}
+          className={tabClass(!!prStates?.includes('MERGED'))}
           onClick={() => setStateFilter(['MERGED'])}
         >
           merged: {data?.mergedPullRequests?.count}
         </span>
         <span
-          className={tabClass(!!prStates.includes('CLOSED'))}
+          className={tabClass(!!prStates?.includes('CLOSED'))}
           onClick={() => setStateFilter(['CLOSED'])}
         >
           {' '}
@@ -87,7 +87,7 @@ const PullRequestListComponent: React.FC<Props> = ({ repository }) => {
           .map(
             (edge) =>
               edge?.node && (
-                <li key={ edge.node.id || edge?.node?.url} className="card">
+                <li key={ edge.node.id ?? edge?.node?.url} className="card">
                   <Suspense fallback={'PR loading...'}>
                     <PullRequestComponent
                       pull={edge.node}

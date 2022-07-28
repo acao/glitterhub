@@ -57,6 +57,9 @@ const RepoLayout: React.FC<Props> = ({
         description
         homepageUrl
         nameWithOwner
+        defaultBranchRef {
+          name
+        }
         name
         owner {
           login

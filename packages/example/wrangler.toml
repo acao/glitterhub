@@ -4,15 +4,9 @@ compatibility_date = "2022-05-04"
 workers_dev = true
 account_id = "8a8c5043ea809ce85369a2657a470d83"
 compatibility_flags = ["streams_enable_constructors"]
-node_compat = true
 
 [build]
 command = "pnpm build cloudflare-workers"
 
 [site]
 bucket = "./dist/client"
-
-[vars]
-TOKEN = "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"
-VITE_GITHUB_TOKEN = "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"
-GH_TOKEN = "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"

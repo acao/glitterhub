@@ -84,10 +84,10 @@ yargs(hideBin(argv))
               sourcemap: true,
               outfile: './dist/client/_worker.js',
               logLevel: 'warning',
-              sourcesContent: false,
               format: 'esm',
               target: 'es2020',
               bundle: true,
+              treeShaking: true,
               minify: !noMinify,
               define: {
                 IS_CLOUDFLARE_WORKER: 'true',
@@ -120,8 +120,8 @@ yargs(hideBin(argv))
               logLevel: 'warning',
               format: 'esm',
               target: 'es2020',
-              sourcesContent: false,
               bundle: true,
+              treeShaking: true,
               minify: !noMinify,
               define: {
                 IS_CLOUDFLARE_WORKER: 'true',

@@ -16,6 +16,7 @@ const PullRequestComponent: React.FC<Props> = ({ pull, nameWithOwner }) => {
   const data = useFragment(
     graphql`
       fragment PullRequest_data on PullRequest {
+        id
         number
         title
         titleHTML
